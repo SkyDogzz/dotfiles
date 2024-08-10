@@ -22,4 +22,3 @@ alias histg="history | grep"
 alias update="sudo apt update && sudo apt upgrade"
 alias ff="find . -type f -name"
 alias weather="curl wttr.in"
-
