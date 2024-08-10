@@ -7,7 +7,7 @@
     "InvisibleTyping": true,
     "SpellCheck": true,
     "SplitLargeMessages": true,
-    "StatusEverywhere": true,
+    "StatusEverywhere": false,
     "ZeresPluginLibrary": true,
     "BDFDB": true
 }
