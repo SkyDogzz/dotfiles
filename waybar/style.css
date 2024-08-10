@@ -1,0 +1,61 @@
+/* General bar styling */
+#bar {
+    background: rgba(46, 52, 64, 0.8); /* Semi-transparent background */
+    color: #eceff4;                    /* Default text color */
+    font-family: "Roboto", sans-serif; /* Font family */
+    border-bottom: 1px solid #4c566a;  /* Bottom border */
+}
+
+/* Module-specific styling */
+#clock {
+    padding: 0 15px;                   /* Clock padding */
+    font-weight: bold;                 /* Clock font weight */
+}
+
+#network {
+    padding: 0 15px;                   /* Network module padding */
+}
+
+#pulseaudio {
+    padding: 0 15px;                   /* Audio module padding */
+}
+
+#battery {
+    padding: 0 15px;                   /* Battery module padding */
+}
+
+#cpu {
+    padding: 0 15px;                   /* CPU module padding */
+}
+
+#memory {
+    padding: 0 15px;                   /* Memory module padding */
+}
+
+/* Hover effects */
+.module:hover {
+    background: rgba(76, 86, 106, 0.8); /* Module background on hover */
+}
+
+/* Workspace styling */
+#workspaces button {
+    border: none;
+    background: transparent;
+    color: #eceff4;
+    padding: 0 10px;
+    font-weight: normal;
+}
+
+#workspaces button.focused {
+    background: rgba(76, 86, 106, 0.8);
+    font-weight: bold;
+}
+
+/* Tooltip styling */
+.tooltip {
+    background: rgba(46, 52, 64, 0.9); /* Tooltip background */
+    color: #eceff4;                   /* Tooltip text color */
+    border-radius: 4px;               /* Tooltip border radius */
+    padding: 5px 10px;                /* Tooltip padding */
+    font-size: 12px;                  /* Tooltip font size */
+}

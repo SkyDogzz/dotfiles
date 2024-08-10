@@ -1,0 +1,54 @@
+{
+    // General settings
+    "layer": "top",  // Position of the bar
+    "position": "top",
+    "height": 30,    // Height of the bar
+    "width": "100%", // Width of the bar
+
+    // Modules displayed on the left, center, and right
+    "modules-left": ["sway/workspaces", "network"],
+    "modules-center": ["clock"],
+    "modules-right": ["pulseaudio", "battery", "cpu", "memory"],
+
+    // Clock module configuration
+    "clock": {
+        "format": "{:%Y-%m-%d %H:%M:%S}",  // Time format
+        "interval": 1                     // Update interval in seconds
+    },
+
+    // Battery module configuration
+    "battery": {
+        "format": "{capacity}% ({status})",  // Battery display format
+        "format-alt": "{capacity}%",         // Alternative format when on AC
+        "tooltip": true                      // Show tooltip on hover
+    },
+
+    // Network module configuration
+    "network": {
+        "format-up": "{ifname}: {ipaddr}/{cidr}",  // Format when network is up
+        "format-down": "No connection",           // Format when network is down
+        "tooltip": true                           // Show tooltip on hover
+    },
+
+    // Pulseaudio module configuration
+    "pulseaudio": {
+        "format": "{volume}% {icon}",  // Volume display format
+        "scroll-step": 5,              // Volume change step when scrolling
+        "format-bluetooth": "{volume}% {icon} (BT)" // Format for Bluetooth audio
+    },
+
+    // CPU module configuration
+    "cpu": {
+        "format": "CPU: {usage}%",  // CPU usage display format
+        "tooltip": true             // Show tooltip on hover
+    },
+
+    // Memory module configuration
+    "memory": {
+        "format": "MEM: {used} MiB",  // Memory usage display format
+        "tooltip": true               // Show tooltip on hover
+    },
+
+    // Style-specific configuration
+    "style": "~/.config/waybar/style.css"  // Path to the CSS file
+}
