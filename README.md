@@ -1,3 +1,5 @@
+# TODO: Swap to i3
+
 # My Dotfiles
 
 Welcome to my personal dotfiles repository! This collection contains my configurations for various tools and environments on an Arch Linux setup. While this is tailored for my own use, feel free to explore, clone, and adapt these dotfiles to suit your own setup.
