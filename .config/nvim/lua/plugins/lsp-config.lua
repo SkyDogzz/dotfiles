@@ -18,21 +18,29 @@ return {
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
       local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.clangd.setup({
-        capabilities = capabilities,
-      })
-      vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, { noremap = true, silent = true, desc = "Go to Definition" })
-      vim.keymap.set("n", "<leader>lh", vim.lsp.buf.hover, { noremap = true, silent = true, desc = "Hover Documentation" })
-      vim.keymap.set("n", "<leader>lf", vim.lsp.buf.references, { noremap = true, silent = true, desc = "Find References" })
-      vim.keymap.set("n", "<leader>ls", vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = "Signature Help" })
-      vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { noremap = true, silent = true, desc = "Rename Symbol" })
-      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, { noremap = true, silent = true, desc = "Code Action" })
-      vim.keymap.set("n", "<leader>lF", vim.lsp.buf.format, { noremap = true, silent = true, desc = "Format Document" })
+
+      local servers = { "lua_ls", "clangd" }
+
+      for _, lsp in ipairs(servers) do
+        lspconfig[lsp].setup({
+          capabilities = capabilities,
+        })
+      end
+
+      local mappings = {
+        ld = { cmd = vim.lsp.buf.definition, desc = "Go to Definition" },
+        lh = { cmd = vim.lsp.buf.hover, desc = "Hover Documentation" },
+        lf = { cmd = vim.lsp.buf.references, desc = "Find References" },
+        ls = { cmd = vim.lsp.buf.signature_help, desc = "Signature Help" },
+        lr = { cmd = vim.lsp.buf.rename, desc = "Rename Symbol" },
+        la = { cmd = vim.lsp.buf.code_action, desc = "Code Action" },
+        ll = { cmd = vim.lsp.buf.format, desc = "Format Document" },
+      }
+
+      for key, map in pairs(mappings) do
+        vim.keymap.set("n", "<leader>" .. key, map.cmd, { noremap = true, silent = true, desc = map.desc })
+      end
     end,
   },
   {

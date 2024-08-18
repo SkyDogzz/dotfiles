@@ -8,6 +8,14 @@ return {
     lazy = false,
     config = function()
       require("telescope").setup({
+        pickers = {
+          find_files = {
+            hidden = true
+          },
+          live_grep = {
+            hidden = true
+          }
+        },
         extensions = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({}),
