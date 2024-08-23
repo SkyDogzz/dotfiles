@@ -50,3 +50,5 @@ pingcheck() {
         ping -c 3 "$site" > /dev/null && echo "$site is up" || echo "$site is down"
     done
 }
+export PATH=$PATH:/home/skydogzz/.venv/bin
+export PATH=$PATH:/home/skydogzz/.venv/bin

@@ -8,5 +8,4 @@ run(){
   fi
 }
 
-run $HOME/.config/polybar/launch.sh
 run picom -b

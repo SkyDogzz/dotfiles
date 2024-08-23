@@ -20,12 +20,25 @@ return {
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
 
-      local servers = { "lua_ls", "clangd" }
+      local servers = { "lua_ls", "clangd", "jsonls" }
 
       for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup({
-          capabilities = capabilities,
-        })
+        if lsp == "clangd" then
+          lspconfig[lsp].setup({
+            capabilities = capabilities,
+            cmd = { "clangd", "--header-insertion=never" },
+            root_dir = lspconfig.util.root_pattern("compile_commands.json", ".clangd", ".git", "Makefile"),
+            settings = {
+              clangd = {
+                args = { "-I./include" },
+              },
+            },
+          })
+        else
+          lspconfig[lsp].setup({
+            capabilities = capabilities,
+          })
+        end
       end
 
       local mappings = {
