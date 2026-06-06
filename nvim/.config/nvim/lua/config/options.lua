@@ -11,3 +11,4 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.mouse = "a"
 vim.opt.wrap = false
+vim.opt.fillchars:append({ eob = " " })
