@@ -1,5 +1,27 @@
 [user]
 	email = tstephan00@outlook.com
 	name = Skydogzz
+
 [init]
 	defaultBranch = main
+
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	pl = pull
+	ps = push
+	lg = log --oneline --graph --all --decorate
+	df = diff
+	dc = diff --cached
+	amend = commit --amend
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	contributors = shortlog -sn
+
+[push]
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
