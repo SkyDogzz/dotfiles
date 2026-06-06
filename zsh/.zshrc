@@ -18,4 +18,31 @@ setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt HIST_VERIFY
 
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+for plugin in \
+  /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /usr/share/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh \
+  /usr/share/zsh/site-functions/zsh-autosuggestions.zsh
+do
+  if [[ -r "$plugin" ]]; then
+    source "$plugin"
+    break
+  fi
+done
+
 eval "$(starship init zsh)"
+
+for plugin in \
+  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh \
+  /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
+do
+  if [[ -r "$plugin" ]]; then
+    source "$plugin"
+    break
+  fi
+done
