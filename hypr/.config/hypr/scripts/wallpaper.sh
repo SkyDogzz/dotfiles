@@ -35,14 +35,9 @@ wallpaper {
 }
 EOF
 
-  if pgrep -x hyprpaper >/dev/null 2>&1; then
-    hyprctl hyprpaper preload "$path" >/dev/null 2>&1 || true
-    hyprctl hyprpaper wallpaper "$monitor,$path" >/dev/null 2>&1
-    hyprctl hyprpaper unload unused >/dev/null 2>&1 || true
-  else
-    hyprpaper -c "$hyprpaper_conf" &
-    disown
-  fi
+  pkill hyprpaper 2>/dev/null || true
+  hyprpaper -c "$hyprpaper_conf" &
+  disown
 
   local name
   name="$(basename "$path")"
