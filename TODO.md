@@ -1,0 +1,23 @@
+# TODO
+
+- Add a screenshot helper script for Hyprland.
+  - region/window/fullscreen capture
+  - copy to clipboard
+  - show a notification with the saved file path
+- Add a power menu script.
+  - lock, logout, reboot, shutdown, suspend
+  - launch it from `rofi`
+- Add a wallpaper switcher script.
+  - change the wallpaper
+  - reload `hyprpaper`
+  - notify the selected wallpaper
+- Add a small network helper script.
+  - open `iwgtk`
+  - toggle Wi-Fi if needed
+  - display current network state
+- Add a media control script.
+  - play, pause, next, previous
+  - show track info when available
+- Add a clipboard cleanup script.
+  - clear the current clipboard
+  - optionally clear `cliphist` history
