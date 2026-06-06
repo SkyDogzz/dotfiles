@@ -2,10 +2,11 @@
 
 ## Scripts
 
-- [ ] Add a screenshot helper script for Hyprland.
+- [x] Add a screenshot helper script for Hyprland.
   - region/window/fullscreen capture
   - copy to clipboard
   - show a notification with the saved file path
+  - region-edit mode with swappy
 - [ ] Add a power menu script.
   - lock, logout, reboot, shutdown, suspend
   - launch it from `rofi`
