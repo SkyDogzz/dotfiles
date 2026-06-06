@@ -1,0 +1,13 @@
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.undofile = true
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.termguicolors = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.mouse = "a"
+vim.opt.wrap = false
