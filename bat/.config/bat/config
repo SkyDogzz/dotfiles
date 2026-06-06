@@ -1,0 +1,4 @@
+--theme="Catppuccin Mocha"
+--style="header,grid,changes"
+--paging=never
+--map-syntax="*.conf:ini"
