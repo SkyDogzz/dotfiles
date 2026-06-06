@@ -1,7 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": true,
-  "instructions": ["MEMORY.md"],
   "permission": {
     "bash": {
       "git *": "allow",
