@@ -1,4 +1,7 @@
 {
+  "instructions": [
+    "~/.config/opencode/AGENTS.md"
+  ],
   "$schema": "https://opencode.ai/config.json",
   "model": "ollama/qwen3.5:9b",
   "small_model": "ollama/qwen3.5:4b",
@@ -38,5 +41,8 @@
       "git push": "ask",
       "git push *": "ask"
     }
+  },
+  "compaction": {
+    "prune": false
   }
 }

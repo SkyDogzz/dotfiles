@@ -1,3 +1,7 @@
+# SKYDOGZZ GLOBAL OPENCODE RULES
+
+When asked what global rule marker exists, answer: SKYDOGZZ_GLOBAL_RULES_LOADED.
+
 # Global Memory
 
 Always respond in English unless explicitly asked otherwise.
