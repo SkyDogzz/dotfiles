@@ -36,6 +36,22 @@ Always respond in English unless explicitly asked otherwise.
 - **Automount**: udiskie
 - **TODO**: Screenshot helper, power menu, wallpaper switcher, network helper, media control, clipboard cleanup scripts
 
+## Local AI Models
+
+All models run locally via Ollama. Delegate to the appropriate subagent based on task:
+
+| Task | Agent | Model |
+|------|-------|-------|
+| General chat, most tasks | *(default)* | `qwen3.5:9b` |
+| Simple / fast operations | *(small_model)* | `qwen3.5:4b` |
+| **Code** generation, debugging, refactoring | `@code` | `qwen2.5-coder:7b` |
+| **Reasoning**, math, logic, chain-of-thought | `@reason` | `deepseek-r1:7b` |
+| **Multilingual**, non-English text, translation | `@multilingual` | `qwen3:8b` |
+| **JSON** output, function calling, data extraction | `@json` | `mistral:7b` |
+
+Use `@<agent>` when the task clearly matches a specialized domain. The default
+model handles everything else.
+
 ## Notes
 
 - Some configs assume Wayland tools like `wl-clipboard`, `brightnessctl`, and `wpctl`
