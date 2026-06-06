@@ -1,0 +1,59 @@
+configuration {
+  modi: "drun,run";
+  show-icons: true;
+  terminal: "kitty";
+  drun-display-format: "{name}";
+  disable-history: false;
+}
+
+* {
+  background: #11111b;
+  foreground: #e0e0e0;
+  selected-background: #fab387;
+  selected-foreground: #11111b;
+  border-color: #fab387;
+}
+
+window {
+  width: 40%;
+  padding: 10px;
+  border: 2px;
+  border-radius: 10px;
+}
+
+mainbox {
+  children: [inputbar, listview];
+  spacing: 8px;
+}
+
+inputbar {
+  children: [prompt, entry];
+  padding: 0 0 6px 0;
+}
+
+listview {
+  lines: 8;
+  columns: 1;
+  fixed-height: false;
+}
+
+element {
+  padding: 6px 8px;
+}
+
+element alternate {
+  background-color: #181825;
+}
+
+element selected {
+  background-color: @selected-background;
+  text-color: @selected-foreground;
+}
+
+element-text, prompt, entry {
+  text-color: #cdd6f4;
+}
+
+element selected element-text {
+  text-color: #f5e0dc;
+}
