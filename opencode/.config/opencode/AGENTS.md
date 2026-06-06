@@ -52,6 +52,46 @@ All models run locally via Ollama. Delegate to the appropriate subagent based on
 Use `@<agent>` when the task clearly matches a specialized domain. The default
 model handles everything else.
 
+## Installed CLI Tools
+
+Prefer these over POSIX defaults where applicable:
+
+| Task | Tool | Install |
+|------|------|---------|
+| JSON processing | `jq` | pacman |
+| File listing | `eza` (`eza -la --icons`) | pacman |
+| File search | `fd` | pacman |
+| Content search | `ripgrep` (`rg`) / `ripgrep-all` (`rga`) | pacman |
+| File view | `bat` | pacman |
+| Process list | `procs` | pacman |
+| Disk usage (summary) | `duf` | pacman |
+| Disk usage (tree) | `dust` | pacman |
+| Disk usage (TUI) | `gdu` / `ncdu` | pacman |
+| System monitor | `btop` / `htop` | pacman |
+| GPU monitor | `nvtop` | pacman |
+| sed replacement | `sd` | pacman |
+| cd replacement | `zoxide` (`z`) | pacman |
+| Shell history | `atuin` | pacman |
+| Terminal multiplexer | `tmux` | pacman |
+| File manager (TUI) | `yazi` | pacman |
+| Git TUI | `lazygit` | pacman |
+| Git diff | `delta` (`git-delta`) | pacman |
+| GitHub CLI | `gh` | pacman |
+| Task runner | `just` | pacman |
+| Benchmark | `hyperfine` | pacman |
+| File watcher | `entr` | pacman |
+| Shell linter | `shellcheck` | pacman |
+| Network bandwidth | `bandwhich` | pacman |
+| HTTP client | `httpie` | pacman |
+| DNS lookup | `dog` | pacman |
+| Man pages (short) | `tldr` (via `tealdeer`) | pacman |
+| System info | `fastfetch` | pacman |
+| Languages | `python` (pip), `rustup` (cargo, rustc), `go`, `node` (npm) | pacman |
+| Wallpaper | `hyprpaper` | pacman |
+| Screenshot | `grim` + `slurp` | pacman |
+| Screenshot annotate | `swappy` | pacman |
+| Clipboard (Wayland) | `wl-clipboard` (`wl-copy`, `wl-paste`) + `cliphist` | pacman |
+
 ## Notes
 
 - Some configs assume Wayland tools like `wl-clipboard`, `brightnessctl`, and `wpctl`
