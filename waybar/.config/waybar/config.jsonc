@@ -2,7 +2,12 @@
     "layer": "top",
     "modules-left": ["hyprland/workspaces", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/network", "custom/caffeine", "pulseaudio", "backlight", "battery", "clock"],
+    "modules-right": ["custom/network", "custom/caffeine", "custom/sysstats", "pulseaudio", "backlight", "battery", "clock"],
+    "custom/sysstats": {
+        "exec": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/sysstats.sh status",
+        "return-type": "json",
+        "interval": 5
+    },
     "custom/network": {
         "exec": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/network.sh status",
         "on-click": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/network.sh toggle",
