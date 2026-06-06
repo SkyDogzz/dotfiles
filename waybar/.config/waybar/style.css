@@ -17,6 +17,7 @@ window#waybar {
 #window,
 #submap,
 #custom-caffeine,
+#custom-network,
 #pulseaudio,
 #backlight,
 #battery,
@@ -25,6 +26,10 @@ window#waybar {
     margin: 6px 4px;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.06);
+}
+
+#custom-network.disconnected {
+    color: rgba(242, 242, 242, 0.45);
 }
 
 #custom-caffeine.on {
