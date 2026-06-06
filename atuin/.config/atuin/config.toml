@@ -1,0 +1,32 @@
+style = "compact"
+inline_height = 15
+show_preview = true
+workspaces = false
+workspace_mode = "prefix"
+exit_mode = "return"
+filter_mode_shell_up_key_binding = "global"
+filter_mode = "fuzzy"
+secret_key = ""
+auto_sync = true
+sync_frequency = "30m"
+sync_address = "https://api.atuin.sh"
+
+[theme]
+# Catppuccin Mocha
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+cursor = "#f5e0dc"
+text = "#cdd6f4"
+subtext = "#a6adc8"
+border = "#313244"
+header = "#cba6f7"
+input = "#cdd6f4"
+items = "#cdd6f4"
+items_selected = "#89b4fa"
+items_highlight = "#f5e0dc"
+items_selected_highlight = "#b4befe"
+prefix = "#cba6f7"
+prefix_selected = "#b4befe"
+preview = "#cdd6f4"
+preview_border = "#313244"
+preview_label = "#6c7086"

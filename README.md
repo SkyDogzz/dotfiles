@@ -4,16 +4,18 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 
 ## Included
 
-- `hypr` — Hyprland, hypridle, hyprlock, hyprpaper configs and helper scripts
-- `kitty` — terminal configuration
-- `waybar` — status bar
-- `rofi` — launcher theme
+- `hypr` — Hyprland, hypridle, hyprlock, hyprpaper (Catppuccin Mocha border/window colors)
+- `kitty` — terminal (Catppuccin Mocha theme)
+- `waybar` — status bar (Catppuccin Mocha colors)
+- `rofi` — launcher (Catppuccin Mocha theme)
 - `dunst` — notification daemon
 - `udiskie` — automount setup
-- `nvim` — Neovim editor settings
-- `zsh` — Zsh config, Starship prompt, atuin, fzf
+- `nvim` — Neovim editor settings (catppuccin/nvim)
+- `zsh` — Zsh config, Starship prompt, atuin, fzf (Catppuccin Mocha)
 - `bat` — Catppuccin Mocha theme with custom config
-- `gitconfig` — Git aliases and user config
+- `btop` — system monitor (Catppuccin Mocha theme)
+- `lazygit` — Git TUI (Catppuccin Mocha theme)
+- `gitconfig` — Git aliases, delta config (Catppuccin Mocha)
 - `opencode` — opencode AI coding assistant config
 - `scripts` — custom utility scripts
 - `.agents/` — opencode subagents

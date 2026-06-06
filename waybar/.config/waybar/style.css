@@ -7,9 +7,9 @@
 }
 
 window#waybar {
-    background: rgba(18, 18, 24, 0.94);
-    color: #f2f2f2;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(17, 17, 27, 0.94);
+    color: #cdd6f4;
+    border-bottom: 1px solid rgba(205, 214, 244, 0.10);
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
 }
 
@@ -30,16 +30,16 @@ window#waybar {
 }
 
 #custom-network.disconnected {
-    color: rgba(242, 242, 242, 0.45);
+    color: rgba(205, 214, 244, 0.45);
 }
 
 #custom-caffeine.on {
-    background: rgba(243, 139, 68, 0.30);
-    color: #fbb86c;
+    background: rgba(250, 179, 135, 0.30);
+    color: #fab387;
 }
 
 #custom-caffeine.off {
-    color: rgba(242, 242, 242, 0.45);
+    color: rgba(205, 214, 244, 0.45);
 }
 
 #workspaces {
@@ -51,22 +51,22 @@ window#waybar {
     padding: 0 10px;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.04);
-    color: rgba(242, 242, 242, 0.65);
+    color: rgba(205, 214, 244, 0.65);
     transition: background 150ms ease, color 150ms ease;
 }
 
 #workspaces button.active {
-    background: rgba(88, 166, 255, 0.30);
+    background: rgba(137, 180, 250, 0.30);
     color: #ffffff;
 }
 
 #workspaces button.visible {
     background: rgba(255, 255, 255, 0.10);
-    color: #f2f2f2;
+    color: #cdd6f4;
 }
 
 #workspaces button.empty {
-    color: rgba(242, 242, 242, 0.35);
+    color: rgba(205, 214, 244, 0.35);
 }
 
 #workspaces button:hover {

@@ -7,11 +7,11 @@ configuration {
 }
 
 * {
-  background: #11111b;
-  foreground: #e0e0e0;
-  selected-background: #fab387;
-  selected-foreground: #11111b;
-  border-color: #fab387;
+  background: #1e1e2e;
+  foreground: #cdd6f4;
+  selected-background: #89b4fa;
+  selected-foreground: #1e1e2e;
+  border-color: #cba6f7;
 }
 
 window {
@@ -51,9 +51,9 @@ element selected {
 }
 
 element-text, prompt, entry {
-  text-color: #cdd6f4;
+  text-color: @foreground;
 }
 
 element selected element-text {
-  text-color: #f5e0dc;
+  text-color: #1e1e2e;
 }

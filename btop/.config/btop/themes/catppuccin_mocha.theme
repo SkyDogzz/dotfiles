@@ -1,0 +1,31 @@
+# Catppuccin Mocha theme for btop
+# https://github.com/catppuccin/btop
+
+theme[main_bg]=#1e1e2e
+theme[main_fg]=#cdd6f4
+theme[title]=#cba6f7
+theme[hi_fg]=#89b4fa
+theme[selected_bg]=#45475a
+theme[selected_fg]=#cdd6f4
+theme[inactive_fg]=#6c7086
+theme[proc_misc]=#f2cdcd
+theme[cpu_box]=#89b4fa
+theme[mem_box]=#a6e3a1
+theme[net_box]=#f9e2af
+theme[proc_box]=#fab387
+theme[div_line]=#313244
+theme[temp_start]=#a6e3a1
+theme[temp_mid]=#f9e2af
+theme[temp_end]=#f38ba8
+theme[cpu_core]=#89b4fa
+theme[mem_used]=#a6e3a1
+theme[mem_cached]=#94e2d5
+theme[mem_free]=#313244
+theme[mem_shared]=#f5c2e7
+theme[swap_used]=#f9e2af
+theme[swap_free]=#313244
+theme[proc_gui]=#cba6f7
+theme[running]=#a6e3a1
+theme[sleeping]=#6c7086
+theme[stopped]=#f38ba8
+theme[zombie]=#f38ba8

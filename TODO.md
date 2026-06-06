@@ -26,19 +26,7 @@
 - [ ] Add a network module to waybar.
   - display current connection state
 
-## Catppuccin themes (ports officiels)
-
-- [ ] `kitty` — Catppuccin Mocha theme
-- [ ] `waybar` — Catppuccin Mocha colors in style.css
-- [ ] `hyprland` — Catppuccin Mocha border/window colors
-- [ ] `hyprlock` — Catppuccin Mocha colors
-- [ ] `neovim` — catppuccin/nvim plugin
-- [ ] `btop` — Catppuccin theme
-- [ ] `lazygit` — Catppuccin theme
-- [ ] `delta` — Catppuccin theme for git diff
-- [ ] `fzf` — Catppuccin color scheme
-- [ ] `atuin` — Catppuccin theme
-- [ ] `zsh-syntax-highlighting` — Catppuccin colors
+## Catppuccin themes — ongoing
 
 ## Done
 
@@ -48,3 +36,14 @@
 - [x] `hyprlock` config
 - [x] Git aliases (co, br, ci, st, pl, ps, lg, df, dc, amend, unstage, last, contributors)
 - [x] `bat` — Catppuccin Mocha theme installed
+- [x] `kitty` — Catppuccin Mocha theme
+- [x] `waybar` — Catppuccin Mocha colors in style.css
+- [x] `hyprland` — Catppuccin Mocha border/window colors
+- [x] `neovim` — catppuccin/nvim plugin (Mocha flavour)
+- [x] `btop` — Catppuccin Mocha theme
+- [x] `lazygit` — Catppuccin Mocha theme
+- [x] `delta` — Catppuccin theme for git diff
+- [x] `fzf` — Catppuccin Mocha color scheme
+- [x] `atuin` — Catppuccin Mocha theme
+- [x] `zsh-syntax-highlighting` — Catppuccin Mocha colors
+- [x] `hyprlock` — Catppuccin Mocha colors

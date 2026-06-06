@@ -25,3 +25,41 @@
 
 [fetch]
 	prune = true
+
+[delta]
+	features = catppuccin-mocha
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Catppuccin Mocha
+
+[delta "catppuccin-mocha"]
+	# Catppuccin Mocha-inspired delta theme
+	grep-header-file-style = "#89b4fa"
+	grep-header-match-style = "#a6e3a1"
+	grep-context-line-style = "#6c7086"
+	grep-separator-style = "#313244"
+	blame-code-style = "#cdd6f4"
+	blame-format = "{timestamp:<15} {author:<20} {rest:<60}"
+	file-added-label = "+"
+	file-copied-label = "!"
+	file-deleted-label = "-"
+	file-modified-label = "M"
+	file-renamed-label = "→"
+	file-style = "#89b4fa"
+	file-decoration-style = "#313244"
+	hunk-header-style = "file line-number syntax"
+	hunk-header-decoration-style = "#313244"
+	hunk-header-file-style = "#cba6f7"
+	hunk-header-line-number-style = "#6c7086"
+	hunk-header-span-style = "#a6adc8"
+	line-numbers-left-style = "#585b70"
+	line-numbers-right-style = "#585b70"
+	line-numbers-minus-style = "#f38ba8"
+	line-numbers-plus-style = "#a6e3a1"
+	line-numbers-zero-style = "#585b70"
+	minus-style = "bold #f38ba8 #1e1e2e"
+	minus-emph-style = "bold #f38ba8 #313244"
+	plus-style = "bold #a6e3a1 #1e1e2e"
+	plus-emph-style = "bold #a6e3a1 #313244"
+	white-space-error-style = "#f38ba8"
+	zero-style = "#cdd6f4 #1e1e2e"
