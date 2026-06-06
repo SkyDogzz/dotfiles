@@ -21,3 +21,11 @@
 - Add a clipboard cleanup script.
   - clear the current clipboard
   - optionally clear `cliphist` history
+- Add a network module to waybar.
+  - display current connection state
+- Add a `hypridle` config for auto-lock after inactivity.
+  - lock screen after X minutes
+  - optional DPMS timeout
+- Enhance `.gitconfig` with useful aliases and `includeIf`.
+  - add common aliases (co, br, ci, st, etc.)
+  - optionally add `includeIf` for work config
