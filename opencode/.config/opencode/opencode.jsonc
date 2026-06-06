@@ -4,35 +4,34 @@
   "small_model": "ollama/qwen3.5:4b",
   "provider": {
     "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
         "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3.5:9b": {
+          "name": "Qwen 3.5 9B"
+        },
+        "qwen3.5:4b": {
+          "name": "Qwen 3.5 4B"
+        },
+        "qwen2.5-coder:7b": {
+          "name": "Qwen 2.5 Coder 7B"
+        },
+        "deepseek-r1:7b": {
+          "name": "DeepSeek R1 7B"
+        },
+        "qwen3:8b": {
+          "name": "Qwen 3 8B"
+        },
+        "mistral:7b": {
+          "name": "Mistral 7B"
+        }
       }
     }
   },
   "lsp": true,
-  "agent": {
-    "code": {
-      "description": "Use for code generation, debugging, refactoring — switches to qwen2.5-coder:7b",
-      "mode": "subagent",
-      "model": "ollama/qwen2.5-coder:7b"
-    },
-    "reason": {
-      "description": "Use for complex reasoning, math, logic puzzles, chain-of-thought — switches to deepseek-r1:7b",
-      "mode": "subagent",
-      "model": "ollama/deepseek-r1:7b"
-    },
-    "multilingual": {
-      "description": "Use for non-English text, translation, multilingual tasks — switches to qwen3:8b",
-      "mode": "subagent",
-      "model": "ollama/qwen3:8b"
-    },
-    "json": {
-      "description": "Use for structured JSON output, function calling, data extraction — switches to mistral:7b",
-      "mode": "subagent",
-      "model": "ollama/mistral:7b"
-    }
-  },
   "permission": {
     "bash": {
       "git *": "allow",
