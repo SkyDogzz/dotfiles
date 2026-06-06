@@ -18,6 +18,10 @@ setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt HIST_VERIFY
 
+alias ls='ls --color=auto'
+alias ll='ls -alF --color=auto'
+alias grep='grep --color=auto'
+
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
@@ -34,6 +38,31 @@ do
 done
 
 eval "$(starship init zsh)"
+
+typeset -g STARSHIP_FULL_PROMPT="$PROMPT"
+typeset -g STARSHIP_FULL_RPROMPT="$RPROMPT"
+typeset -g STARSHIP_TRANSIENT_PROMPT='$(/usr/local/bin/starship module character)'
+typeset -g STARSHIP_TRANSIENT_RPROMPT=''
+typeset -g STARSHIP_TRANSIENT_ACTIVE=0
+
+starship_transient_restore_prompt() {
+  if (( STARSHIP_TRANSIENT_ACTIVE )); then
+    PROMPT="$STARSHIP_FULL_PROMPT"
+    RPROMPT="$STARSHIP_FULL_RPROMPT"
+    STARSHIP_TRANSIENT_ACTIVE=0
+  fi
+}
+
+starship_transient_line_finish() {
+  STARSHIP_TRANSIENT_ACTIVE=1
+  PROMPT="$STARSHIP_TRANSIENT_PROMPT"
+  RPROMPT="$STARSHIP_TRANSIENT_RPROMPT"
+  zle reset-prompt
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd starship_transient_restore_prompt
+zle -N zle-line-finish starship_transient_line_finish
 
 for plugin in \
   /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
