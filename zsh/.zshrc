@@ -22,6 +22,12 @@ alias ls='ls --color=auto'
 alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
+stow-all() {
+  for d in ~/dotfiles/*/; do
+    stow -R -d ~/dotfiles "$(basename "$d")"
+  done
+}
+
 # atuin shell history
 eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
 
