@@ -10,7 +10,7 @@ filepath="$screenshot_dir/$filename"
 notify() {
   local title="$1"
   local body="$2"
-  dunstify -a "Screenshot" "$title" "$body" -A "default,Copy path"
+  dunstify -a "Screenshot" "$title" "$body"
 }
 
 capture_full() {

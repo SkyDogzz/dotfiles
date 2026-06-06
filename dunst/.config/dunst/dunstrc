@@ -13,9 +13,13 @@
     frame_width = 2
     corner_radius = 8
     timeout = 5
-    offset = 12, 12
+    offset = (12, 12)
     origin = top-right
     transparency = 10
+
+[screenshot]
+    appname = "Screenshot"
+    script = ~/.config/dunst/dunst_notif_action
 
 [urgency_low]
     background = "#181825"
