@@ -9,11 +9,11 @@
     background = "#11111b"
     foreground = "#cdd6f4"
     frame_color = "#fab387"
-    separator_color = frame_color
+    separator_color = "#fab387"
     frame_width = 2
     corner_radius = 8
     timeout = 5
-    offset = 12x12
+    offset = 12, 12
     origin = top-right
     transparency = 10
 
