@@ -16,6 +16,7 @@ window#waybar {
 #workspaces,
 #window,
 #submap,
+#custom-caffeine,
 #pulseaudio,
 #backlight,
 #battery,
@@ -24,6 +25,15 @@ window#waybar {
     margin: 6px 4px;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.06);
+}
+
+#custom-caffeine.on {
+    background: rgba(243, 139, 68, 0.30);
+    color: #fbb86c;
+}
+
+#custom-caffeine.off {
+    color: rgba(242, 242, 242, 0.45);
 }
 
 #workspaces {
