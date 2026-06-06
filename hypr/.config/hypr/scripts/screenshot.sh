@@ -10,13 +10,13 @@ filepath="$screenshot_dir/$filename"
 notify() {
   local title="$1"
   local body="$2"
-  notify-send -a "Screenshot" "$title" "$body"
+  dunstify -a "Screenshot" "$title" "$body" -A "default,Copy path"
 }
 
 capture_full() {
   grim "$filepath"
   wl-copy < "$filepath"
-  notify "Fullscreen" "$filename"
+  notify "Fullscreen" "$filepath"
 }
 
 capture_window() {
@@ -28,7 +28,7 @@ capture_window() {
   fi
   grim -g "$geom" "$filepath"
   wl-copy < "$filepath"
-  notify "Window" "$filename"
+  notify "Window" "$filepath"
 }
 
 capture_region() {
@@ -39,7 +39,7 @@ capture_region() {
   fi
   grim -g "$geom" "$filepath"
   wl-copy < "$filepath"
-  notify "Region" "$filename"
+  notify "Region" "$filepath"
 }
 
 capture_region_edit() {
@@ -51,7 +51,7 @@ capture_region_edit() {
   grim -g "$geom" "$filepath"
   wl-copy < "$filepath"
   swappy -f "$filepath" -o "$filepath"
-  notify "Region (edited)" "$filename"
+  notify "Region (edited)" "$filepath"
 }
 
 action="${1:-}"

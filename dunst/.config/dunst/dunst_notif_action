@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${DUNST_APP_NAME:-}" == "Screenshot" && "${2:-}" == "default" ]]; then
+  wl-copy <<< "${DUNST_BODY:-}"
+fi
