@@ -6,10 +6,10 @@
     indicate_hidden = yes
     word_wrap = yes
     ignore_newline = no
-    background = "#11111b"
+    background = "#1e1e2e"
     foreground = "#cdd6f4"
-    frame_color = "#fab387"
-    separator_color = "#fab387"
+    frame_color = "#b4befe"
+    separator_color = "#585b70"
     frame_width = 2
     corner_radius = 8
     timeout = 5
@@ -22,16 +22,16 @@
     script = ~/.config/dunst/dunst_notif_action
 
 [urgency_low]
-    background = "#181825"
+    background = "#1e1e2e"
     foreground = "#cdd6f4"
-    frame_color = "#45475a"
+    frame_color = "#585b70"
 
 [urgency_normal]
-    background = "#11111b"
+    background = "#1e1e2e"
     foreground = "#cdd6f4"
-    frame_color = "#fab387"
+    frame_color = "#b4befe"
 
 [urgency_critical]
     background = "#1e1e2e"
-    foreground = "#f5e0dc"
+    foreground = "#cdd6f4"
     frame_color = "#f38ba8"
