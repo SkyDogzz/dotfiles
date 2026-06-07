@@ -33,6 +33,10 @@
   - update system
   - check stow health
   - verify symlinks
+- [x] Add dotfiles doctor.
+  - check commands
+  - verify symlinks
+  - validate Hyprland helper scripts
 
 ## Catppuccin themes — ongoing
 
@@ -65,3 +69,4 @@
 - [x] `update-system` — Arch system upgrade helper
 - [x] `stow-healthcheck` — dry-run validation of stow packages
 - [x] `check-symlinks` — verify stowed symlinks resolve correctly
+- [x] `dotfiles-doctor` — repo-wide diagnostics

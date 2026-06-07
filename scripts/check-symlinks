@@ -4,6 +4,7 @@ set -euo pipefail
 stow_dir="${STOW_DIR:-$HOME/dotfiles}"
 target_dir="${STOW_TARGET:-$HOME}"
 ignore_packages="${STOW_IGNORE_PACKAGES:-greetd scripts}"
+ignore_paths="${STOW_IGNORE_PATHS:-node_modules dist build coverage .git .cache vendor}"
 
 if ! command -v realpath >/dev/null 2>&1; then
   printf '[FAIL] realpath is required\n' >&2
@@ -11,6 +12,17 @@ if ! command -v realpath >/dev/null 2>&1; then
 fi
 
 status=0
+
+should_ignore_path() {
+  local path="$1"
+  local needle
+  for needle in $ignore_paths; do
+    if [[ "$path" == *"/$needle/"* || "$path" == *"/$needle" || "$path" == "$needle"* ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
 
 for pkgdir in "$stow_dir"/*/; do
   [[ -d "$pkgdir" ]] || continue
@@ -25,6 +37,10 @@ for pkgdir in "$stow_dir"/*/; do
   done
 
   while IFS= read -r -d '' source; do
+    if should_ignore_path "${source#"$stow_dir"/}"; then
+      continue
+    fi
+
     rel_path="${source#"$pkgdir"}"
     target="${target_dir}/${rel_path}"
 
@@ -48,7 +64,15 @@ for pkgdir in "$stow_dir"/*/; do
       status=1
       continue
     fi
-  done < <(find "$pkgdir" \( -type f -o -type l \) -print0)
+  done < <(find "$pkgdir" \( \
+    -path '*/node_modules/*' -o \
+    -path '*/dist/*' -o \
+    -path '*/build/*' -o \
+    -path '*/coverage/*' -o \
+    -path '*/.git/*' -o \
+    -path '*/.cache/*' -o \
+    -path '*/vendor/*' \
+  \) -prune -o \( -type f -o -type l \) -print0)
 done
 
 exit "$status"

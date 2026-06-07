@@ -30,8 +30,10 @@ for pkgdir in "$stow_dir"/*/; do
     continue
   }
 
-  if [[ -n "$output" ]]; then
-    printf '[WARN] %s would change something or has conflicts\n%s\n' "$pkg" "$output"
+  clean_output="$(printf '%s\n' "$output" | grep -v '^WARNING: in simulation mode so not modifying filesystem\.$' || true)"
+
+  if [[ -n "$clean_output" ]]; then
+    printf '[WARN] %s would change something or has conflicts\n%s\n' "$pkg" "$clean_output"
     status=1
   else
     printf '[OK] %s\n' "$pkg"

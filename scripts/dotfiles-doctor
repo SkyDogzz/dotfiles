@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="${DOTFILES_ROOT:-$HOME/dotfiles}"
+hypr_root="$repo_root/hypr/.config/hypr"
+
+ok_count=0
+warn_count=0
+fail_count=0
+status=0
+
+note_ok() {
+  printf '[OK] %s\n' "$1"
+  ok_count=$((ok_count + 1))
+}
+
+note_warn() {
+  printf '[WARN] %s\n' "$1"
+  warn_count=$((warn_count + 1))
+}
+
+note_fail() {
+  printf '[FAIL] %s\n' "$1" >&2
+  fail_count=$((fail_count + 1))
+  status=1
+}
+
+check_command() {
+  if command -v "$1" >/dev/null 2>&1; then
+    note_ok "command $1"
+  else
+    note_fail "command $1 missing"
+  fi
+}
+
+check_executable_file() {
+  local path="$1"
+  local label="${2:-$path}"
+
+  if [[ ! -e "$path" ]]; then
+    note_fail "$label missing"
+  elif [[ ! -x "$path" ]]; then
+    note_fail "$label not executable"
+  else
+    note_ok "$label"
+  fi
+}
+
+check_file_present() {
+  local path="$1"
+  local label="${2:-$path}"
+
+  if [[ -f "$path" ]]; then
+    note_ok "$label"
+  else
+    note_fail "$label missing"
+  fi
+}
+
+check_script_dir() {
+  local dir="$1"
+  local label="$2"
+
+  if [[ ! -d "$dir" ]]; then
+    note_fail "$label missing"
+    return
+  fi
+
+  while IFS= read -r -d '' file; do
+    check_executable_file "$file" "${file#"$repo_root/"}"
+  done < <(find "$dir" -maxdepth 1 -type f -print0 | sort -z)
+}
+
+check_hypr_bind_targets() {
+  local hypr_conf="$hypr_root/hyprland.conf"
+  local target line
+  declare -A seen_targets=()
+
+  if [[ ! -f "$hypr_conf" ]]; then
+    note_fail "hyprland config missing: hypr/.config/hypr/hyprland.conf"
+    return
+  fi
+
+  while IFS= read -r line; do
+    [[ "$line" == *"$repo_root/"* ]] || continue
+    [[ "$line" =~ $repo_root/([^[:space:],]+) ]] || continue
+    target="${BASH_REMATCH[0]}"
+    [[ -n "${seen_targets[$target]:-}" ]] && continue
+    seen_targets["$target"]=1
+    if [[ ! -e "$target" ]]; then
+      note_fail "hypr bind target missing: ${target#"$repo_root"/}"
+    elif [[ ! -x "$target" ]]; then
+      note_fail "hypr bind target not executable: ${target#"$repo_root"/}"
+    else
+      note_ok "hypr bind target ${target#"$repo_root"/}"
+    fi
+  done < "$hypr_conf"
+}
+
+echo "[INFO] Dotfiles doctor"
+echo "[INFO] Repo: $repo_root"
+echo
+
+for cmd in \
+  stow \
+  jq \
+  hyprctl \
+  hyprpaper \
+  dunst \
+  dunstify \
+  notify-send \
+  wl-copy \
+  wl-paste \
+  grim \
+  slurp \
+  swappy \
+  brightnessctl \
+  iw \
+  iwgtk \
+  wpctl \
+  cliphist \
+  waybar \
+  udiskie \
+  rofi \
+  hyprlock \
+  hypridle
+do
+  check_command "$cmd"
+done
+
+echo
+note_ok "scripts directory present: scripts"
+check_script_dir "$repo_root/scripts" "scripts"
+
+echo
+note_ok "scripts directory present: hypr/.config/hypr/scripts"
+check_script_dir "$hypr_root/scripts" "hypr/.config/hypr/scripts"
+
+echo
+check_file_present "$hypr_root/hyprland.conf" "hypr/.config/hypr/hyprland.conf"
+check_hypr_bind_targets
+
+echo
+if [[ -x "$repo_root/scripts/stow-healthcheck" ]]; then
+  if "$repo_root/scripts/stow-healthcheck"; then
+    note_ok "stow-healthcheck"
+  else
+    note_fail "stow-healthcheck reported issues"
+  fi
+else
+  note_fail "scripts/stow-healthcheck missing or not executable"
+fi
+
+if [[ -x "$repo_root/scripts/check-symlinks" ]]; then
+  if "$repo_root/scripts/check-symlinks"; then
+    note_ok "check-symlinks"
+  else
+    note_fail "check-symlinks reported issues"
+  fi
+else
+  note_fail "scripts/check-symlinks missing or not executable"
+fi
+
+echo
+printf 'Summary: %d ok, %d warnings, %d failures\n' "$ok_count" "$warn_count" "$fail_count"
+exit "$status"
