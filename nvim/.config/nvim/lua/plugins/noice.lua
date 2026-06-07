@@ -5,20 +5,23 @@ return {
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
-    opts = {
-      lsp = {
-        progress = { enabled = true },
-        override = {
-          "vim.lsp.protocol.begin",
-          true,
+    config = function(_, opts)
+      local ok, noice = pcall(require, "noice")
+      if not ok then
+        return
+      end
+
+      noice.setup(opts or {
+        lsp = {
+          progress = { enabled = true },
         },
-      },
-      presets = {
-        bottom_search = true,
-        command_palette = true,
-        long_message_to_split = true,
-        inc_rename = true,
-      },
-    },
+        presets = {
+          bottom_search = true,
+          command_palette = true,
+          long_message_to_split = true,
+          inc_rename = true,
+        },
+      })
+    end,
   },
 }

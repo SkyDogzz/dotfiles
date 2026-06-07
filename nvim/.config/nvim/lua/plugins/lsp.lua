@@ -25,6 +25,7 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "stevearc/conform.nvim",
     },
     event = { "BufReadPre", "BufNewFile" },
     cmd = "Format",
@@ -47,8 +48,25 @@ return {
         capabilities = cmp_capabilities.default_capabilities(capabilities)
       end
 
-      vim.api.nvim_create_user_command("Format", function()
-        vim.lsp.buf.format()
+      vim.api.nvim_create_user_command("Format", function(args)
+        local has_conform, conform = pcall(require, "conform")
+        if has_conform then
+          conform.format({
+            async = true,
+            lsp_format = "fallback",
+            range = args.range > 0
+              and {
+                start = { args.line1, 0 },
+                ["end"] = { args.line2, 0 },
+              }
+              or nil,
+          })
+          return
+        end
+
+        vim.lsp.buf.format({
+          async = true,
+        })
       end, { desc = "Format buffer", range = true })
 
       vim.lsp.config.clangd = {
@@ -74,8 +92,8 @@ return {
     "mfussenegger/nvim-lint",
     opts = {
       linters_by_ft = {
-        c = { "clang-tidy", "cppcheck" },
-        cpp = { "clang-tidy", "cppcheck" },
+        c = { "clangtidy", "cppcheck" },
+        cpp = { "clangtidy", "cppcheck" },
       },
     },
     config = function(_, opts)
