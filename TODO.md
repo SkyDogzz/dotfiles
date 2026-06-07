@@ -66,6 +66,7 @@
 - [x] `wallpaper.sh` — wallpaper switcher
 - [x] `network.sh` — Wi-Fi status/toggle helper
 - [x] `clipboard-clear.sh` — clipboard cleanup helper
+- [x] `stowctl/` — C++ ncurses TUI for Stow package management
 - [x] `update-system` — Arch system upgrade helper
 - [x] `stow-healthcheck` — dry-run validation of stow packages
 - [x] `check-symlinks` — verify stowed symlinks resolve correctly

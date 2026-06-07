@@ -25,6 +25,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `scripts/stow-healthcheck` — dry-run Stow validation across packages
 - `scripts/check-symlinks` — verify symlinks point back to the repo
 - `scripts/dotfiles-doctor` — diagnostics for commands, symlinks, and Hyprland helpers
+- `scripts/stowctl/` — C++ ncurses TUI for Stow package management
 - `.agents/` — opencode subagents
 - `ai-models.md` — local AI model references
 - `projects/` — per-project overrides
