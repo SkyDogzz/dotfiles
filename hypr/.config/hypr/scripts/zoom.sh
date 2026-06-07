@@ -2,12 +2,18 @@
 set -euo pipefail
 
 action="${1:-}"
-step=0.25
 min_scale=0.5
 max_scale=3.0
 
-declare -A defaults
-defaults["eDP-2"]=1.3333333333
+gcd() {
+  local a=$1 b=$2
+  while (( b )); do
+    local tmp=$b
+    b=$(( a % b ))
+    a=$tmp
+  done
+  echo "$a"
+}
 
 cursor=$(hyprctl cursorpos)
 cx=${cursor%%,*}
@@ -39,23 +45,57 @@ if [[ -z "$current_monitor" ]]; then
   exit 1
 fi
 
+w=$(jq -r '.width' <<< "$monitor_json")
+h=$(jq -r '.height' <<< "$monitor_json")
+g=$(gcd "$w" "$h")
+limit=$((120 * g))
+
+declare -A defaults
+defaults["eDP-2"]=1.3333333333
+
+current_n=$(jq -n "$current_scale * 120 | round")
+
 case "$action" in
   in)
-    new_scale=$(jq -n "$current_scale + $step")
-    new_scale=$(jq -n "if $new_scale > $max_scale then $max_scale else $new_scale end")
+    new_n=$current_n
+    for ((n = current_n + 1; n <= 360; n++)); do
+      if (( limit % n == 0 )); then
+        new_n=$n
+        break
+      fi
+    done
+    if (( new_n == current_n )); then
+      notify-send -a "Hyprland" "Zoom" "$current_monitor: déjà au zoom max"
+      exit 0
+    fi
     ;;
   out)
-    new_scale=$(jq -n "$current_scale - $step")
-    new_scale=$(jq -n "if $new_scale < $min_scale then $min_scale else $new_scale end")
+    new_n=$current_n
+    for ((n = current_n - 1; n >= 60; n--)); do
+      if (( limit % n == 0 )); then
+        new_n=$n
+        break
+      fi
+    done
+    if (( new_n == current_n )); then
+      notify-send -a "Hyprland" "Zoom" "$current_monitor: déjà au zoom min"
+      exit 0
+    fi
     ;;
   reset)
-    new_scale="${defaults[$current_monitor]:-1}"
+    default_scale="${defaults[$current_monitor]:-1}"
+    new_n=$(jq -n "$default_scale * 120 | round")
+    if (( new_n == current_n )); then
+      exit 0
+    fi
     ;;
   *)
     echo "usage: $0 {in|out|reset}"
     exit 1
     ;;
 esac
+
+new_scale=$(jq -n "$new_n / 120")
 
 res=$(jq -r '"\(.width)x\(.height)@\(.refreshRate | round)"' <<< "$monitor_json")
 pos=$(jq -r '"\(.x)x\(.y)"' <<< "$monitor_json")
