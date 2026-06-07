@@ -1,0 +1,34 @@
+[opener]
+edit = [
+  { run = "nvim %s", block = true, for = "unix" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "text/*", use = "edit" },
+  { mime = "application/json", use = "edit" },
+  { mime = "application/yaml", use = "edit" },
+  { mime = "application/toml", use = "edit" },
+  { mime = "application/xml", use = "edit" },
+  { mime = "application/javascript", use = "edit" },
+  { mime = "application/typescript", use = "edit" },
+  { mime = "application/x-httpd-php", use = "edit" },
+]
+
+[mgr]
+show_hidden = true
+show_symlink = true
+scrolloff = 5
+sort_by = "natural"
+sort_dir_first = true
+
+[preview]
+wrap = "yes"
+tab_size = 4
+
+[tasks]
+file_workers = 4
+plugin_workers = 2
+fetch_workers = 2
+preload_workers = 3
+process_workers = 3
