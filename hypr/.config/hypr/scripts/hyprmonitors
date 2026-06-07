@@ -20,6 +20,9 @@ if [[ -f "$cfg" ]]; then
   done < "$cfg"
 fi
 
+# Give hyprpaper time to adjust to the new scale before re-applying wallpapers
+sleep 0.3
+
 # Extract monitor names already handled in the config
 configured=()
 while IFS= read -r line; do
