@@ -6,8 +6,6 @@ hyprpaper_conf="$HOME/.config/hypr/hyprpaper.conf"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr"
 state_file="$cache_dir/current_wallpaper"
 
-monitor="${MONITOR:-eDP-2}"
-
 get_wallpapers() {
   find "$wallpaper_dir" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | sort
 }
@@ -25,19 +23,17 @@ set_wallpaper() {
   mkdir -p "$cache_dir"
   printf '%s' "$path" > "$state_file"
 
+  # Update the static config for next login
   cat > "$hyprpaper_conf" <<EOF
 preload = $path
 
-wallpaper {
-    monitor = $monitor
-    path = $path
-    fit_mode = fill
-}
 EOF
 
-  pkill hyprpaper 2>/dev/null || true
-  hyprpaper -c "$hyprpaper_conf" &
-  disown
+  # Apply wallpaper to all connected monitors
+  while IFS= read -r name; do
+    printf 'wallpaper = %s,%s\n' "$name" "$path" >> "$hyprpaper_conf"
+    hyprctl hyprpaper wallpaper "$name,$path,fill"
+  done < <(hyprctl monitors -j | jq -r '.[].name')
 
   local name
   name="$(basename "$path")"

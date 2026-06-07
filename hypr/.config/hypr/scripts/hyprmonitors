@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cfg="$HOME/.config/hypr/hyprmonitors.conf"
+hyprpaper_cfg="$HOME/.config/hypr/hyprpaper.conf"
+
+# Ensure hyprpaper is running
+if ! pgrep -x hyprpaper >/dev/null 2>&1; then
+  hyprpaper -c "$hyprpaper_cfg" &
+  disown
+  sleep 0.5
+fi
+
+# Apply the static config for the built-in display
+if [[ -f "$cfg" ]]; then
+  while IFS= read -r line; do
+    [[ "$line" =~ ^[[:space:]]*# ]] && continue
+    [[ -z "${line// /}" ]] && continue
+    hyprctl keyword "$line"
+  done < "$cfg"
+fi
+
+# Extract monitor names already handled in the config
+configured=()
+while IFS= read -r line; do
+  if [[ "$line" =~ ^[[:space:]]*monitor[[:space:]]*=[[:space:]]*([^,]+) ]]; then
+    configured+=("${BASH_REMATCH[1]}")
+  fi
+done < "$cfg"
+
+# Get the current wallpaper path
+wallpaper_path=""
+for f in "$cfg" "$hyprpaper_cfg"; do
+  [[ -f "$f" ]] || continue
+  wallpaper_path="$(grep -oP 'preload\s*=\s*\K\S+' "$f" 2>/dev/null | head -1)"
+  [[ -n "$wallpaper_path" ]] && break
+done
+
+# Configure monitors and set wallpapers on all connected displays
+while IFS= read -r name; do
+  already=false
+  for c in "${configured[@]}"; do
+    if [[ "$name" == "$c" ]]; then
+      already=true
+      break
+    fi
+  done
+  if ! $already; then
+    hyprctl keyword monitor "$name,auto,auto,1"
+  fi
+  if [[ -n "$wallpaper_path" ]]; then
+    hyprctl hyprpaper wallpaper "$name,$wallpaper_path,fill"
+  fi
+done < <(hyprctl monitors -j | jq -r '.[].name')
