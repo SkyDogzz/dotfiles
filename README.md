@@ -18,6 +18,9 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `gitconfig` — Git aliases, delta config (Catppuccin Mocha)
 - `opencode` — opencode AI coding assistant config
 - `scripts` — custom utility scripts
+- `scripts/update-system` — system upgrade helper for Arch
+- `scripts/stow-healthcheck` — dry-run Stow validation across packages
+- `scripts/check-symlinks` — verify symlinks point back to the repo
 - `.agents/` — opencode subagents
 - `ai-models.md` — local AI model references
 - `projects/` — per-project overrides

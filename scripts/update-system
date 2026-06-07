@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v paru >/dev/null 2>&1; then
+  pkg_manager=paru
+  pkg_args=(-Syu)
+elif command -v yay >/dev/null 2>&1; then
+  pkg_manager=yay
+  pkg_args=(-Syu)
+else
+  pkg_manager=sudo
+  pkg_args=(pacman -Syu)
+fi
+
+printf '[INFO] Updating system with %s\n' "$pkg_manager"
+
+if [[ "$pkg_manager" == sudo ]]; then
+  exec sudo "${pkg_args[@]}" "$@"
+else
+  exec "$pkg_manager" "${pkg_args[@]}" "$@"
+fi

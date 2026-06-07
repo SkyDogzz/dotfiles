@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+stow_dir="${STOW_DIR:-$HOME/dotfiles}"
+target_dir="${STOW_TARGET:-$HOME}"
+ignore_packages="${STOW_IGNORE_PACKAGES:-greetd scripts}"
+
+if ! command -v stow >/dev/null 2>&1; then
+  printf '[FAIL] stow is not installed\n' >&2
+  exit 1
+fi
+
+status=0
+
+for pkgdir in "$stow_dir"/*/; do
+  [[ -d "$pkgdir" ]] || continue
+
+  pkg="${pkgdir%/}"
+  pkg="${pkg##*/}"
+
+  for ignore in $ignore_packages; do
+    if [[ "$pkg" == "$ignore" ]]; then
+      continue 2
+    fi
+  done
+
+  output="$(stow -n -d "$stow_dir" -t "$target_dir" "$pkg" 2>&1)" || {
+    printf '[FAIL] %s\n%s\n' "$pkg" "$output"
+    status=1
+    continue
+  }
+
+  if [[ -n "$output" ]]; then
+    printf '[WARN] %s would change something or has conflicts\n%s\n' "$pkg" "$output"
+    status=1
+  else
+    printf '[OK] %s\n' "$pkg"
+  fi
+done
+
+exit "$status"

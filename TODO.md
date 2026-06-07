@@ -26,6 +26,10 @@
   - optionally clear `cliphist` history
 - [ ] Add a network module to waybar.
   - display current connection state
+- [x] Add maintenance scripts.
+  - update system
+  - check stow health
+  - verify symlinks
 
 ## Catppuccin themes — ongoing
 
@@ -48,3 +52,6 @@
 - [x] `atuin` — Catppuccin Mocha theme
 - [x] `zsh-syntax-highlighting` — Catppuccin Mocha colors
 - [x] `hyprlock` — Catppuccin Mocha colors
+- [x] `update-system` — Arch system upgrade helper
+- [x] `stow-healthcheck` — dry-run validation of stow packages
+- [x] `check-symlinks` — verify stowed symlinks resolve correctly
