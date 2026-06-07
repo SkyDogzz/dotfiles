@@ -77,24 +77,8 @@ case "$action" in
     fi
     set_wallpaper "$prev"
     ;;
-  select)
-    mapfile -t wallpapers < <(get_wallpapers)
-    entries=""
-    for wp in "${wallpapers[@]}"; do
-      entries+="$(basename "$wp")\x00icon\x1f$wp\n"
-    done
-    chosen="$(printf '%b' "$entries" | rofi -dmenu -p "Wallpaper" -theme ~/.config/rofi/config.rasi)"
-    if [[ -n "$chosen" ]]; then
-      for wp in "${wallpapers[@]}"; do
-        if [[ "$(basename "$wp")" == "$chosen" ]]; then
-          set_wallpaper "$wp"
-          break
-        fi
-      done
-    fi
-    ;;
   *)
-    printf 'usage: %s {next|prev|select}\n' "${0##*/}" >&2
+    printf 'usage: %s {next|prev}\n' "${0##*/}" >&2
     exit 1
     ;;
 esac
