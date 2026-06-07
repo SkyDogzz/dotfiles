@@ -1,0 +1,41 @@
+#!/usr/bin/env zsh
+# Generate completion files for installed CLI tools
+# Saves to ~/.zsh/completions/ — loaded automatically by compinit via fpath
+
+dir="${ZSH_COMPLETIONS_DIR:-$HOME/dotfiles/zsh/.zsh/completions}"
+mkdir -p "$dir"
+
+# Format: "command args... <output_file>"
+# Output file goes in $dir/
+completions=(
+  "docker completion zsh                 _docker"
+  "npm completion                        _npm"
+  "gh completion -s zsh                  _gh"
+  "just --completions zsh                _just"
+  "rustup completions zsh                _rustup"
+)
+
+generated=0
+skipped=0
+
+for entry in "${completions[@]}"; do
+  cmd="${entry%% *}"
+  file="${dir}/${entry##* }"
+  gen_cmd="${entry% *}"
+
+  if ! command -v "$cmd" &>/dev/null; then
+    print "  [SKIP]  $cmd — not installed"
+    ((skipped++))
+    continue
+  fi
+
+  if $=gen_cmd >"$file" 2>/dev/null && [[ -s "$file" ]]; then
+    print "  [GEN]   $cmd → $file"
+    ((generated++))
+  else
+    print "  [FAIL]  $cmd — generation failed"
+  fi
+done
+
+print
+print "Done: $generated generated, $skipped skipped"

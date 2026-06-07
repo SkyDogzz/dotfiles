@@ -17,6 +17,13 @@ setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt HIST_VERIFY
+setopt AUTO_CD
+setopt EXTENDED_GLOB
+setopt CORRECT
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 
 alias ls='ls --color=auto'
 alias ll='ls -alF --color=auto'
@@ -29,7 +36,7 @@ stow-all() {
 }
 
 # atuin shell history
-eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
+eval "$(atuin init zsh)" 2>/dev/null
 
 # fzf Catppuccin Mocha theme
 export FZF_DEFAULT_OPTS=" \
@@ -128,6 +135,13 @@ ZSH_HIGHLIGHT_STYLES+=(
   path_prefix                   'fg=#cdd6f4'
   path_approx                   'fg=#fab387'
 )
+
+# completion
+autoload -Uz compinit
+compinit
+
+# Pre-generated completions — regen with: gen-completions
+fpath+=~/.zsh/completions
 
 # opencode
 export PATH=/home/skydogzz/.opencode/bin:$PATH
