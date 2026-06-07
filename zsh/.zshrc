@@ -12,6 +12,8 @@ bindkey -M emacs '^[[3~' delete-char
 bindkey -M emacs '^[[H' beginning-of-line
 bindkey -M emacs '^[[F' end-of-line
 
+export EDITOR=nvim
+
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
@@ -33,13 +35,19 @@ alias stow-all='~/dotfiles/scripts/stow-all'
 
 # atuin shell history (ctrl-r only, not up-arrow)
 eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
-# Restore default up-arrow bindings in case old atuin bindings linger
-bindkey -M emacs '^[[A' up-line-or-history
-bindkey -M emacs '^[OA' up-line-or-history
-bindkey -M viins '^[[A' up-line-or-history
-bindkey -M viins '^[OA' up-line-or-history
-bindkey -M vicmd '^[[A' up-line-or-history
-bindkey -M vicmd '^[OA' up-line-or-history
+# Restore default up/down-arrow bindings in case old atuin bindings linger
+bindkey -M emacs '^[[A' history-beginning-search-backward
+bindkey -M emacs '^[OA' history-beginning-search-backward
+bindkey -M emacs '^[[B' history-beginning-search-forward
+bindkey -M emacs '^[OB' history-beginning-search-forward
+bindkey -M viins '^[[A' history-beginning-search-backward
+bindkey -M viins '^[OA' history-beginning-search-backward
+bindkey -M viins '^[[B' history-beginning-search-forward
+bindkey -M viins '^[OB' history-beginning-search-forward
+bindkey -M vicmd '^[[A' history-beginning-search-backward
+bindkey -M vicmd '^[OA' history-beginning-search-backward
+bindkey -M vicmd '^[[B' history-beginning-search-forward
+bindkey -M vicmd '^[OB' history-beginning-search-forward
 
 # fzf Catppuccin Mocha theme
 export FZF_DEFAULT_OPTS=" \
