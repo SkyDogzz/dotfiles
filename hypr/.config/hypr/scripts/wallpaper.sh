@@ -31,7 +31,7 @@ preload = $path
 wallpaper {
     monitor = $monitor
     path = $path
-    fit_mode = tile
+    fit_mode = fill
 }
 EOF
 
