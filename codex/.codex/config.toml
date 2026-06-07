@@ -1,0 +1,48 @@
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+approvals_reviewer = "guardian_subagent"
+
+[projects."/home/skydogzz/dotfiles"]
+trust_level = "trusted"
+
+[tui]
+status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "branch-changes", "run-state", "permissions", "context-remaining", "five-hour-limit", "weekly-limit"]
+status_line_use_colors = true
+
+# OpenCode permission policy reference
+# Codex does not expose the same granular allow/deny permission table in this
+# config file, so this block is documentation-only. The closest enforceable
+# controls in Codex are trust level, AGENTS.md instructions, and per-command
+# approval when the sandbox requires it.
+#
+# allow:
+#   list, edit, task, skill, webfetch, websearch, question
+# deny:
+#   doom_loop
+# external_directory allow:
+#   /tmp/*, ~/.config/*, ~/dotfiles/**, ~/projects/**, ~/downloads/**,
+#   ~/Documents/**, ~/Templates/**, /etc/*, /usr/*
+# read deny:
+#   ~/.ssh/*, ~/.gnupg/*, ~/.ollama/id_ed25519*, ~/.pki/**, ~/.netrc,
+#   ~/.aws/**, ~/.docker/config.json, ~/.npmrc, ~/.zsh_history,
+#   ~/.bash_history, ~/.python_history, **/.env*, **/secret*, **/secrets/**,
+#   **/token*, **/tokens*, **/auth*, **/credentials*, **/*cred*, **/*.key,
+#   **/*.pem, **/*.p12, **/*.pfx, **/*.cert, **/*.crt, **/*.ovpn, **/*.log,
+#   **/logs/**, **/.git-credentials, **/service-account*, **/passwd*,
+#   **/password*
+# bash allow:
+#   sd *, procs *, duf *, dust *, btop, htop, nvtop, z *, cat *, which *,
+#   type *, uname *, fastfetch, lsblk *, df *, free *, uptime, ps *, lsof *,
+#   pwd, readlink *, realpath *, stat *, file *, du *, date, timedatectl *,
+#   hostnamectl *, journalctl *, unzip *, tar *, gzip *, dog *, tldr *, man *,
+#   stow *, killall *, ls *, eza *, bat *, fd *, rg *, echo *, printf *,
+#   head *, tail *, wc *, sort *, diff *, jq *, find *, history, env, alias,
+#   printenv *, tee *, xargs *, tr *, cut *, uniq *, watch *, id *, whoami,
+#   hostname *, nproc, nvidia-smi *, mkdir *, touch *, cp *, mv *, ln *,
+#   rmdir *, just *, lazygit, yazi, hyprctl *, brightnessctl *, wpctl *,
+#   grim *, slurp *, swappy *, wl-copy *, wl-paste, cliphist *, notify-send *,
+#   dunstify *, git *, git add, git diff, git status
+# bash ask:
+#   systemctl *, curl *, wget *, http *, ping *, chmod *, chown *, npx *,
+#   npm *, pip *, cargo *, go *, gh *, tmux *, git push, rm *, rm -rf *,
+#   sudo *, pacman *
