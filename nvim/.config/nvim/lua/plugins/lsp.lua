@@ -9,7 +9,22 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = { "clangd" },
+      ensure_installed = {
+        "bashls",
+        "csharp_ls",
+        "clangd",
+        "cssls",
+        "gopls",
+        "html",
+        "jsonls",
+        "lemminx",
+        "marksman",
+        "prismals",
+        "sqls",
+        "taplo",
+        "ts_ls",
+        "yamlls",
+      },
       automatic_installation = true,
     },
   },
@@ -17,7 +32,15 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = { "clang-format" },
+      ensure_installed = {
+        "clang-format",
+        "csharpier",
+        "goimports",
+        "prettier",
+        "shfmt",
+        "sqlfluff",
+        "taplo",
+      },
     },
   },
   {
@@ -48,6 +71,13 @@ return {
         capabilities = cmp_capabilities.default_capabilities(capabilities)
       end
 
+      vim.filetype.add({
+        extension = {
+          csproj = "xml",
+          slnx = "xml",
+        },
+      })
+
       vim.api.nvim_create_user_command("Format", function(args)
         local has_conform, conform = pcall(require, "conform")
         if has_conform then
@@ -72,7 +102,59 @@ return {
       vim.lsp.config.clangd = {
         capabilities = capabilities,
       }
+      vim.lsp.config.bashls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.csharp_ls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.cssls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.gopls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.html = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.jsonls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.lemminx = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.marksman = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.prismals = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.sqls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.taplo = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.yamlls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.config.ts_ls = {
+        capabilities = capabilities,
+      }
       vim.lsp.enable("clangd")
+      vim.lsp.enable("bashls")
+      vim.lsp.enable("csharp_ls")
+      vim.lsp.enable("cssls")
+      vim.lsp.enable("gopls")
+      vim.lsp.enable("html")
+      vim.lsp.enable("jsonls")
+      vim.lsp.enable("lemminx")
+      vim.lsp.enable("marksman")
+      vim.lsp.enable("prismals")
+      vim.lsp.enable("sqls")
+      vim.lsp.enable("taplo")
+      vim.lsp.enable("yamlls")
+      vim.lsp.enable("ts_ls")
     end,
   },
   {
@@ -81,6 +163,22 @@ return {
       formatters_by_ft = {
         c = { "clang-format" },
         cpp = { "clang-format" },
+        cs = { "csharpier" },
+        css = { "prettier" },
+        go = { "goimports", "gofmt" },
+        html = { "prettier" },
+        json = { "prettier" },
+        jsonc = { "prettier" },
+        javascript = { "prettier" },
+        javascriptreact = { "prettier" },
+        markdown = { "prettier" },
+        sh = { "shfmt" },
+        sql = { "sqlfluff" },
+        xml = { "xmllint" },
+        toml = { "taplo" },
+        typescript = { "prettier" },
+        typescriptreact = { "prettier" },
+        yaml = { "prettier" },
       },
       format_on_save = {
         timeout_ms = 500,
