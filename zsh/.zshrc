@@ -30,8 +30,11 @@ alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
 stow-all() {
+  local ignore=("greetd")
   for d in ~/dotfiles/*/; do
-    stow -R -d ~/dotfiles "$(basename "$d")"
+    local pkg=$(basename "$d")
+    (( $ignore[(Ie)$pkg] )) && continue
+    stow -R -d ~/dotfiles "$pkg"
   done
 }
 
