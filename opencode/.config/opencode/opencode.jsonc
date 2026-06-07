@@ -40,8 +40,11 @@
   "formatter": true,
   "permission": {
     "external_directory": {
+      "/tmp/*": "allow",
       "~/.config/*": "allow",
-      "~/dotfiles/**": "allow"
+      "~/dotfiles/**": "allow",
+      "/etc/*": "allow",
+      "/usr/*": "allow"
     },
     "read": {
       "/tmp/*": "allow",
@@ -82,5 +85,9 @@
     "build": {
       "model": "opencode/deepseek-v4-flash-free"
     }
-  }
+  },
+  "plugin": [
+    "./plugins/permission-notify.js",
+    "./plugins/notify-done.js"
+  ]
 }
