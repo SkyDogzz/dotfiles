@@ -142,6 +142,5 @@ compinit
 
 # Pre-generated completions — regen with: gen-completions
 fpath+=~/.zsh/completions
-
 # opencode
 export PATH=/home/skydogzz/.opencode/bin:$PATH
