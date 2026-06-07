@@ -52,7 +52,8 @@ entry {
 listview {
   spacing: 4px;
   padding: 4px 0;
-  dynamic: true;
+  dynamic: false;
+  lines: 6;
   cycle: false;
 }
 
@@ -73,6 +74,7 @@ element-text {
 button {
   padding: 8px 14px;
   spacing: 6px;
+  font: "JetBrainsMonoNL Nerd Font 16";
 }
 
 button selected {
