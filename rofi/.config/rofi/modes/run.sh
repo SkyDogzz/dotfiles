@@ -2,15 +2,20 @@
 set -euo pipefail
 
 if [ -n "${1:-}" ]; then
-    if [[ "$1" == *.desktop ]]; then
-        file=$(find /usr/share/applications ~/.local/share/applications -name "$1" 2>/dev/null | head -1)
-        if [ -n "$file" ]; then
-            exec_line=$(grep -m1 '^Exec=' "$file" | sed 's/^Exec=//; s/%.//g')
-            eval exec "$exec_line"
-        fi
+    # ROFI_INFO contains the .desktop filename set via \0info\x1f
+    desktop="${ROFI_INFO:-$1}"
+    if [[ "$desktop" == *.desktop ]]; then
+        for dir in /usr/share/applications ~/.local/share/applications; do
+            file="$dir/$desktop"
+            if [ -f "$file" ]; then
+                exec_line=$(grep -m1 '^Exec=' "$file" | sed 's/^Exec=//; s/%.//g')
+                eval "( $exec_line & )"
+                exit 0
+            fi
+        done
         exit 1
     fi
-    eval exec "$@"
+    eval "( $* & )"
     exit 0
 fi
 
