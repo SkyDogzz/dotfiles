@@ -20,6 +20,7 @@ return {
         "lemminx",
         "marksman",
         "prismals",
+        "rust_analyzer",
         "sqls",
         "taplo",
         "ts_ls",
@@ -70,6 +71,17 @@ return {
       if has_cmp then
         capabilities = cmp_capabilities.default_capabilities(capabilities)
       end
+
+      vim.diagnostic.config({
+        virtual_text = {
+          spacing = 2,
+          prefix = "●",
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
 
       vim.filetype.add({
         extension = {
@@ -129,6 +141,9 @@ return {
       vim.lsp.config.prismals = {
         capabilities = capabilities,
       }
+      vim.lsp.config.rust_analyzer = {
+        capabilities = capabilities,
+      }
       vim.lsp.config.sqls = {
         capabilities = capabilities,
       }
@@ -151,6 +166,7 @@ return {
       vim.lsp.enable("lemminx")
       vim.lsp.enable("marksman")
       vim.lsp.enable("prismals")
+      vim.lsp.enable("rust_analyzer")
       vim.lsp.enable("sqls")
       vim.lsp.enable("taplo")
       vim.lsp.enable("yamlls")
@@ -172,6 +188,7 @@ return {
         javascript = { "prettier" },
         javascriptreact = { "prettier" },
         markdown = { "prettier" },
+        rust = { "rustfmt" },
         sh = { "shfmt" },
         sql = { "sqlfluff" },
         xml = { "xmllint" },
