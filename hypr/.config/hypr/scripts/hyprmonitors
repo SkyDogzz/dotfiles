@@ -52,3 +52,9 @@ while IFS= read -r name; do
     hyprctl hyprpaper wallpaper "$name,$wallpaper_path,fill"
   fi
 done < <(hyprctl monitors -j | jq -r '.[].name')
+
+# Restart dunst so it picks up the correct monitor layout
+pkill dunst 2>/dev/null || true
+sleep 0.3
+dunst --startup_notification=false &
+disown

@@ -1,4 +1,6 @@
 [global]
+    monitor = 0
+    follow = mouse
     font = JetBrains Mono 10
     markup = full
     format = "<b>%s</b>\n%b"
