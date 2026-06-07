@@ -39,6 +39,10 @@
   "lsp": true,
   "formatter": true,
   "permission": {
+    "external_directory": {
+      "~/.config/*": "allow",
+      "~/dotfiles/**": "allow"
+    },
     "read": {
       "/tmp/*": "allow",
       "/home/*": "allow",
@@ -64,44 +68,6 @@
       "pacman *": "ask"
     }
   },
-  "ignorePatterns": [
-    "**/.git",
-    "**/.cache",
-    "**/.Trash*",
-    "**/node_modules",
-    "**/target",
-    "**/build",
-    "**/dist",
-    "**/.next",
-    "**/__pycache__",
-    "**/*.pyc",
-    "**/*.pyo",
-    "**/venv",
-    "**/.venv",
-    "**/.env",
-    "**/*.o",
-    "**/*.obj",
-    "**/*.exe",
-    "**/vendor",
-    "**/.DS_Store",
-    "**/Thumbs.db",
-    "**/*.swp",
-    "**/*.swo",
-    "**/*~",
-    "**/.vscode",
-    "**/.idea",
-    "**/*.lock",
-    "**/*.png",
-    "**/*.jpg",
-    "**/*.jpeg",
-    "**/*.ico",
-    "**/*.gif",
-    "**/*.mp4",
-    "**/*.mp3",
-    "**/*.webm",
-    "**/*.woff2",
-    "**/*.ttf"
-  ],
   "compaction": {
     "prune": false
   },

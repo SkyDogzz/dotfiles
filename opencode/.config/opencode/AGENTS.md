@@ -16,8 +16,9 @@ Always respond in English unless explicitly asked otherwise.
 - **Editor**: Neovim
 - **Languages**: C, C++, and others as needed
 
-## Dotfiles
+## Dotfiles (CRITICAL RULE)
 
+- **HARD RULE**: Everything under `~/.config/` is stow-symlinked from `~/dotfiles/`. Whenever you need to check or modify something under `~/.config/`, always navigate to `~/dotfiles/` instead. NEVER read, edit, or create files directly in `~/.config/` — always work in `~/dotfiles/`.
 - Managed with **stow** — `~/dotfiles/<app>/.config/<app>/...`
 - All opencode config lives under `dotfiles/opencode/.config/opencode/` (symlinked to `~/.config/opencode/`)
 - Also uses: `dotfiles/.agents/` at the repo root for opencode agents

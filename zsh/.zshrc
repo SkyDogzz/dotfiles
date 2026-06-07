@@ -128,3 +128,6 @@ ZSH_HIGHLIGHT_STYLES+=(
   path_prefix                   'fg=#cdd6f4'
   path_approx                   'fg=#fab387'
 )
+
+# opencode
+export PATH=/home/skydogzz/.opencode/bin:$PATH
