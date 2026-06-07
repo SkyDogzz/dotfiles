@@ -38,8 +38,15 @@ stow-all() {
   done
 }
 
-# atuin shell history
-eval "$(atuin init zsh)" 2>/dev/null
+# atuin shell history (ctrl-r only, not up-arrow)
+eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
+# Restore default up-arrow bindings in case old atuin bindings linger
+bindkey -M emacs '^[[A' up-line-or-history
+bindkey -M emacs '^[OA' up-line-or-history
+bindkey -M viins '^[[A' up-line-or-history
+bindkey -M viins '^[OA' up-line-or-history
+bindkey -M vicmd '^[[A' up-line-or-history
+bindkey -M vicmd '^[OA' up-line-or-history
 
 # fzf Catppuccin Mocha theme
 export FZF_DEFAULT_OPTS=" \
