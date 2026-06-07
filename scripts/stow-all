@@ -1,0 +1,18 @@
+#!/bin/sh
+# Stow all dotfiles packages except those listed
+STOW_DIR="${STOW_DIR:-$HOME/dotfiles}"
+IGNORE="greetd scripts"
+
+for d in "$STOW_DIR"/*/; do
+  pkg=$(basename "$d")
+  for ignore in $IGNORE; do
+    if [ "$pkg" = "$ignore" ]; then
+      continue 2
+    fi
+  done
+  if ! stow -R -d "$STOW_DIR" "$pkg" 2>&1; then
+    printf "  [FAIL] %s\n" "$pkg"
+  else
+    printf "  stow %s\n" "$pkg"
+  fi
+done

@@ -29,14 +29,7 @@ alias ls='ls --color=auto'
 alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
-stow-all() {
-  local ignore=("greetd")
-  for d in ~/dotfiles/*/; do
-    local pkg=$(basename "$d")
-    (( $ignore[(Ie)$pkg] )) && continue
-    stow -R -d ~/dotfiles "$pkg"
-  done
-}
+alias stow-all='~/dotfiles/scripts/stow-all'
 
 # atuin shell history (ctrl-r only, not up-arrow)
 eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
