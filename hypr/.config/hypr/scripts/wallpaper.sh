@@ -23,17 +23,29 @@ set_wallpaper() {
   mkdir -p "$cache_dir"
   printf '%s' "$path" > "$state_file"
 
-  # Update the static config for next login
   cat > "$hyprpaper_conf" <<EOF
 preload = $path
-
+wallpaper = ,$path
+splash = false
 EOF
 
-  # Apply wallpaper to all connected monitors
-  while IFS= read -r name; do
-    printf 'wallpaper = %s,%s\n' "$name" "$path" >> "$hyprpaper_conf"
-    hyprctl hyprpaper wallpaper "$name,$path,fill"
-  done < <(hyprctl monitors -j | jq -r '.[].name')
+  if ! pgrep -x hyprpaper >/dev/null 2>&1; then
+    hyprpaper -c "$hyprpaper_conf" &
+    disown
+  fi
+
+  for _ in {1..20}; do
+    failed=false
+    while IFS= read -r monitor; do
+      if ! hyprctl hyprpaper reload "$monitor,$path" >/dev/null 2>&1; then
+        failed=true
+      fi
+    done < <(hyprctl monitors -j | jq -r '.[].name')
+    if ! $failed; then
+      break
+    fi
+    sleep 0.25
+  done
 
   local name
   name="$(basename "$path")"

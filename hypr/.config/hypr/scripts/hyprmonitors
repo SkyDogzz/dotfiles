@@ -4,14 +4,7 @@ set -euo pipefail
 cfg="$HOME/.config/hypr/hyprmonitors.conf"
 hyprpaper_cfg="$HOME/.config/hypr/hyprpaper.conf"
 
-# Ensure hyprpaper is running
-if ! pgrep -x hyprpaper >/dev/null 2>&1; then
-  hyprpaper -c "$hyprpaper_cfg" &
-  disown
-  sleep 0.5
-fi
-
-# Apply the static config for the built-in display
+# Apply monitor settings before hyprpaper creates its layer surfaces.
 if [[ -f "$cfg" ]]; then
   while IFS= read -r line; do
     [[ "$line" =~ ^[[:space:]]*# ]] && continue
@@ -20,8 +13,19 @@ if [[ -f "$cfg" ]]; then
   done < "$cfg"
 fi
 
-# Give hyprpaper time to adjust to the new scale before re-applying wallpapers
-sleep 0.3
+# Wait for Hyprland to expose at least one monitor.
+for _ in {1..20}; do
+  if hyprctl monitors -j 2>/dev/null | jq -e 'length > 0' >/dev/null; then
+    break
+  fi
+  sleep 0.25
+done
+
+# Start hyprpaper only after the monitor layout is ready.
+if ! pgrep -x hyprpaper >/dev/null 2>&1; then
+  hyprpaper -c "$hyprpaper_cfg" &
+  disown
+fi
 
 # Extract monitor names already handled in the config
 configured=()
@@ -35,11 +39,11 @@ done < "$cfg"
 wallpaper_path=""
 for f in "$cfg" "$hyprpaper_cfg"; do
   [[ -f "$f" ]] || continue
-  wallpaper_path="$(grep -oP 'preload\s*=\s*\K\S+' "$f" 2>/dev/null | head -1)"
+  wallpaper_path="$(grep -oP 'preload\s*=\s*\K\S+' "$f" 2>/dev/null | head -1 || true)"
   [[ -n "$wallpaper_path" ]] && break
 done
 
-# Configure monitors and set wallpapers on all connected displays
+# Configure monitors not covered by the static config.
 while IFS= read -r name; do
   already=false
   for c in "${configured[@]}"; do
@@ -49,12 +53,26 @@ while IFS= read -r name; do
     fi
   done
   if ! $already; then
-    hyprctl keyword monitor "$name,auto,auto,1"
-  fi
-  if [[ -n "$wallpaper_path" ]]; then
-    hyprctl hyprpaper wallpaper "$name,$wallpaper_path,fill"
+    hyprctl keyword monitor "$name,preferred,auto,1"
   fi
 done < <(hyprctl monitors -j | jq -r '.[].name')
+
+# hyprpaper can accept IPC before the configured image has finished loading.
+# Retry until every connected monitor has accepted the wallpaper.
+if [[ -n "$wallpaper_path" ]]; then
+  for _ in {1..20}; do
+    failed=false
+    while IFS= read -r name; do
+      if ! hyprctl hyprpaper wallpaper "$name,$wallpaper_path" >/dev/null 2>&1; then
+        failed=true
+      fi
+    done < <(hyprctl monitors -j | jq -r '.[].name')
+    if ! $failed; then
+      break
+    fi
+    sleep 0.25
+  done
+fi
 
 # Restart dunst so it picks up the correct monitor layout
 pkill dunst 2>/dev/null || true
