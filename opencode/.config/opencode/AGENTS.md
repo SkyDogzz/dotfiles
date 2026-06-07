@@ -1,10 +1,28 @@
 # SKYDOGZZ GLOBAL OPENCODE RULES
 
-When asked what global rule marker exists, answer: SKYDOGZZ_GLOBAL_RULES_LOADED.
+# ═══════════════════════════════════════════════════════════════════════
+#  ▌ ABSOLUTE HARD RULE — ENGLISH ONLY — NO EXCEPTIONS ▌
+# ═══════════════════════════════════════════════════════════════════════
+#  You MUST ALWAYS respond in English. This is non-negotiable.
+#  Even if the user writes to you in French, Spanish, German, etc.,
+#  you MUST reply in English.
+#  The ONLY case where you may use another language is when the user
+#  EXPLICITLY and DIRECTLY asks you to with a phrase like:
+#  "réponds en français", "responde en español", etc.
+#  ⚠  If the user just asks a question in another language (e.g.
+#     "tu sais quoi de moi ?"), that does NOT count — answer in English.
+# ═══════════════════════════════════════════════════════════════════════
+
+# ═══════════════════════════════════════════════════════════════════════
+#  ▌ HARD RULES — CODING ▌
+# ═══════════════════════════════════════════════════════════════════════
+#  - Always check existing patterns (conventions, imports, style)
+#    before writing new code.
+#  - Verify with tests / lint / typecheck after making changes
+#    (if the project has them).
+# ═══════════════════════════════════════════════════════════════════════
 
 # Global Memory
-
-Always respond in English unless explicitly asked otherwise.
 
 ## User Profile
 
@@ -26,7 +44,6 @@ Always respond in English unless explicitly asked otherwise.
 ## Workflow Preferences
 
 - **Coding style**: Thorough & detailed — explain what you're doing and why
-- **Before coding**: Always check existing patterns and conventions in the codebase first
 - **Dangerous operations** (git push --force, rm -rf, etc.): Always ask before executing
 - **Commit style**: Conventional commits preferred (feat:, fix:, chore:, etc.)
 - **Keep it simple**: Avoid over-engineering; prefer straightforward solutions
