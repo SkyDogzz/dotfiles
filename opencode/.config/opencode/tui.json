@@ -1,4 +1,9 @@
 {
   "$schema": "https://opencode.ai/tui.json",
-  "theme": "catppuccin-transparent"
+  "theme": "catppuccin-transparent",
+  "keybinds": {
+    "leader": "ctrl+space",
+    "app_exit": "ctrl+d,<leader>q",
+    "session_interrupt": "escape,ctrl+c"
+  }
 }
