@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-modes="run,clipboard:$HOME/.config/rofi/modes/clipboard.sh,wallpaper:$HOME/.config/rofi/modes/wallpaper.sh"
-default="${1:-run}"
+run_mode="$HOME/.config/rofi/modes/run.sh"
+clipboard_mode="$HOME/.config/rofi/modes/clipboard.sh"
+wallpaper_mode="$HOME/.config/rofi/modes/wallpaper.sh"
 
-rofi -show "$default" -modi "$modes" -sidebar-mode
+case "${1:-run}" in
+  run)       default=" Run"           ;;
+  clipboard) default="󰅰 Clipboard"     ;;
+  wallpaper) default="󰸉 Wallpaper"     ;;
+  *)         default=" Run"           ;;
+esac
+
+rofi -show "$default" -modi " Run:$run_mode,󰅰 Clipboard:$clipboard_mode,󰸉 Wallpaper:$wallpaper_mode" -sidebar-mode

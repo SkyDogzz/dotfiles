@@ -1,10 +1,89 @@
 configuration {
-  modi: "drun,run";
+  modi: "󰀻 Apps:drun, Run:run";
   show-icons: true;
   terminal: "kitty";
   drun-display-format: "{name}";
   disable-history: false;
+  font: "JetBrainsMonoNL Nerd Font 12";
 }
 
 @import "catppuccin-mocha"
 @import "catppuccin-default"
+
+* {
+  scrollbar: false;
+}
+
+window {
+  padding: 12px;
+  border: 2px;
+  border-radius: 16px;
+}
+
+mainbox {
+  spacing: 8px;
+  padding: 8px;
+  children: [ sidebar, inputbar, listview ];
+}
+
+sidebar {
+  spacing: 6px;
+  padding: 0;
+}
+
+inputbar {
+  spacing: 8px;
+  padding: 10px 14px;
+  children: [ prompt, textbox-prompt-colon, entry, case-indicator ];
+}
+
+prompt {
+  padding: 0 6px 0 0;
+}
+
+textbox-prompt-colon {
+  padding: 0 4px;
+}
+
+entry {
+  padding: 0 8px;
+}
+
+listview {
+  spacing: 4px;
+  padding: 4px 0;
+  dynamic: true;
+  cycle: false;
+}
+
+element {
+  padding: 10px 14px;
+  spacing: 10px;
+}
+
+element-icon {
+  size: 24px;
+}
+
+element-text {
+  padding: 0 4px;
+  vertical-align: 0.5;
+}
+
+button {
+  padding: 8px 14px;
+  spacing: 6px;
+}
+
+button selected {
+  background-color: #313244;
+  text-color: #cdd6f4;
+}
+
+button normal {
+  text-color: #6c7086;
+}
+
+case-indicator {
+  padding: 0 6px;
+}
