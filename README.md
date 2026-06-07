@@ -4,7 +4,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 
 ## Included
 
-- `hypr` — Hyprland, hypridle, hyprlock, hyprpaper (Catppuccin Mocha border/window colors)
+- `hypr` — Hyprland, hypridle, hyprlock, hyprpaper, and helper scripts (Catppuccin Mocha border/window colors)
 - `kitty` — terminal (Catppuccin Mocha theme)
 - `waybar` — status bar (Catppuccin Mocha colors)
 - `rofi` — launcher (Catppuccin Mocha theme)
@@ -18,6 +18,9 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `gitconfig` — Git aliases, delta config (Catppuccin Mocha)
 - `opencode` — opencode AI coding assistant config
 - `scripts` — custom utility scripts
+- `scripts/stow-all` — apply all Stow packages except ignored ones
+- `scripts/gen-completions` — generate shell completions for installed tools
+- `scripts/check-ai-models.sh` — check local Ollama model availability
 - `scripts/update-system` — system upgrade helper for Arch
 - `scripts/stow-healthcheck` — dry-run Stow validation across packages
 - `scripts/check-symlinks` — verify symlinks point back to the repo

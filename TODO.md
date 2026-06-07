@@ -10,23 +10,26 @@
 - [ ] Add a power menu script.
   - lock, logout, reboot, shutdown, suspend
   - launch it from `rofi`
-- [ ] Add a wallpaper switcher script.
+- [x] Add a wallpaper switcher script.
   - change the wallpaper
   - reload `hyprpaper`
   - notify the selected wallpaper
-- [ ] Add a small network helper script.
+- [x] Add a small network helper script.
   - open `iwgtk`
   - toggle Wi-Fi if needed
   - display current network state
 - [ ] Add a media control script.
   - play, pause, next, previous
   - show track info when available
-- [ ] Add a clipboard cleanup script.
+- [x] Add a clipboard cleanup script.
   - clear the current clipboard
   - optionally clear `cliphist` history
 - [ ] Add a network module to waybar.
   - display current connection state
 - [x] Add maintenance scripts.
+  - stow all packages
+  - generate completions
+  - check AI models
   - update system
   - check stow health
   - verify symlinks
@@ -52,6 +55,13 @@
 - [x] `atuin` — Catppuccin Mocha theme
 - [x] `zsh-syntax-highlighting` — Catppuccin Mocha colors
 - [x] `hyprlock` — Catppuccin Mocha colors
+- [x] `stow-all` — apply all Stow packages except ignored ones
+- [x] `gen-completions` — generate shell completions for installed tools
+- [x] `check-ai-models` — check local Ollama model availability
+- [x] `screenshot.sh` — Hyprland screenshot helper
+- [x] `wallpaper.sh` — wallpaper switcher
+- [x] `network.sh` — Wi-Fi status/toggle helper
+- [x] `clipboard-clear.sh` — clipboard cleanup helper
 - [x] `update-system` — Arch system upgrade helper
 - [x] `stow-healthcheck` — dry-run validation of stow packages
 - [x] `check-symlinks` — verify stowed symlinks resolve correctly
