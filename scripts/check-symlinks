@@ -4,7 +4,6 @@ set -euo pipefail
 stow_dir="${STOW_DIR:-$HOME/dotfiles}"
 target_dir="${STOW_TARGET:-$HOME}"
 ignore_packages="${STOW_IGNORE_PACKAGES:-greetd scripts}"
-ignore_paths="${STOW_IGNORE_PATHS:-node_modules dist build coverage .git .cache vendor}"
 
 if ! command -v realpath >/dev/null 2>&1; then
   printf '[FAIL] realpath is required\n' >&2
@@ -13,14 +12,40 @@ fi
 
 status=0
 
-should_ignore_path() {
+classify_path() {
   local path="$1"
-  local needle
-  for needle in $ignore_paths; do
-    if [[ "$path" == *"/$needle/"* || "$path" == *"/$needle" || "$path" == "$needle"* ]]; then
+
+  case "$path" in
+    */node_modules/*|*/.git/*|*/.cache/*|*/vendor/*)
+      printf 'vendor'
+      return 0
+      ;;
+    */dist/*|*/build/*|*/coverage/*)
+      printf 'generated'
+      return 0
+      ;;
+    zsh/.zsh/completions/*)
+      printf 'generated'
+      return 0
+      ;;
+  esac
+
+  return 1
+}
+
+path_has_symlink_ancestor() {
+  local target="$1"
+  local current
+
+  current="$(dirname "$target")"
+  while [[ "$current" != "/" && "$current" != "." ]]; do
+    if [[ -L "$current" ]]; then
+      printf '%s\n' "$current"
       return 0
     fi
+    current="$(dirname "$current")"
   done
+
   return 1
 }
 
@@ -37,7 +62,9 @@ for pkgdir in "$stow_dir"/*/; do
   done
 
   while IFS= read -r -d '' source; do
-    if should_ignore_path "${source#"$stow_dir"/}"; then
+    rel_source="${source#"$stow_dir"/}"
+    if category="$(classify_path "$rel_source")"; then
+      printf '[SKIP][%s] %s\n' "$category" "$rel_source"
       continue
     fi
 
@@ -50,20 +77,29 @@ for pkgdir in "$stow_dir"/*/; do
       continue
     fi
 
-    if [[ ! -L "$target" ]]; then
-      printf '[FAIL] not a symlink: %s\n' "$target"
-      status=1
-      continue
-    fi
-
     source_real="$(realpath "$source")"
     target_real="$(realpath "$target")"
 
-    if [[ "$source_real" != "$target_real" ]]; then
-      printf '[FAIL] wrong target: %s -> %s (expected %s)\n' "$target" "$target_real" "$source_real"
-      status=1
+    if [[ -L "$target" ]]; then
+      if [[ "$source_real" != "$target_real" ]]; then
+        printf '[FAIL] wrong target: %s -> %s (expected %s)\n' "$target" "$target_real" "$source_real"
+        status=1
+      fi
       continue
     fi
+
+    if symlink_ancestor="$(path_has_symlink_ancestor "$target")"; then
+      if [[ "$source_real" != "$target_real" ]]; then
+        printf '[FAIL] wrong target via parent symlink: %s -> %s (expected %s)\n' "$target" "$target_real" "$source_real"
+        status=1
+      else
+        printf '[SKIP][stowed-parent] %s (covered by %s)\n' "${target#"$target_dir"/}" "${symlink_ancestor#"$target_dir"/}"
+      fi
+      continue
+    fi
+
+    printf '[FAIL] not covered by a symlink: %s\n' "$target"
+    status=1
   done < <(find "$pkgdir" \( \
     -path '*/node_modules/*' -o \
     -path '*/dist/*' -o \
