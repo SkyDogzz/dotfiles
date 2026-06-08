@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+    "modules-left": ["hyprland/workspaces", "tray", "keyboard-state", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["custom/network", "bluetooth", "custom/caffeine", "custom/sysstats", "pulseaudio", "backlight", "battery", "clock"],
     "custom/sysstats": {
@@ -24,6 +24,20 @@
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
         "on-click": "blueberry"
+    },
+    "tray": {
+        "icon-size": 16,
+        "show-passive-items": true,
+        "spacing": 8
+    },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "󰌌",
+            "unlocked": "󰌏"
+        }
     },
     "custom/caffeine": {
         "exec": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/caffeine.sh status",
@@ -58,7 +72,6 @@
     "backlight": {
         "format": "{percent}% {icon}",
         "format-icons": ["󰃞", "󰃟", "󰃠"],
-        "on-click": "brightnessctl set 50%",
         "scroll-step": 5
     },
     "clock": {
