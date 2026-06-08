@@ -33,7 +33,7 @@ notify_mic() {
 
 case "$action" in
   up)
-    wpctl set-volume "$sink" 5%+
+    wpctl set-volume "$sink" 5%+ --limit 1.0
     notify_volume
     ;;
   down)
