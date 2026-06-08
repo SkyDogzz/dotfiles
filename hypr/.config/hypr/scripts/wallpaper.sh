@@ -10,6 +10,22 @@ get_wallpapers() {
   find "$wallpaper_dir" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | sort
 }
 
+ensure_hyprpaper() {
+  if pgrep -x hyprpaper >/dev/null 2>&1; then
+    return 0
+  fi
+
+  hyprpaper -c "$hyprpaper_conf" &
+  disown
+
+  for _ in {1..20}; do
+    if pgrep -x hyprpaper >/dev/null 2>&1; then
+      return 0
+    fi
+    sleep 0.1
+  done
+}
+
 get_current() {
   if [[ -f "$state_file" ]]; then
     cat "$state_file"
@@ -29,15 +45,12 @@ wallpaper = ,$path
 splash = false
 EOF
 
-  if ! pgrep -x hyprpaper >/dev/null 2>&1; then
-    hyprpaper -c "$hyprpaper_conf" &
-    disown
-  fi
+  ensure_hyprpaper
 
   for _ in {1..20}; do
     failed=false
     while IFS= read -r monitor; do
-      if ! hyprctl hyprpaper reload "$monitor,$path" >/dev/null 2>&1; then
+      if ! hyprctl hyprpaper wallpaper "$monitor,$path,fill" >/dev/null 2>&1; then
         failed=true
       fi
     done < <(hyprctl monitors -j | jq -r '.[].name')
