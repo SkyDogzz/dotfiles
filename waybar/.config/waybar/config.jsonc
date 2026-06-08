@@ -1,8 +1,8 @@
 {
     "layer": "top",
-    "modules-left": ["hyprland/workspaces", "tray", "keyboard-state", "hyprland/submap"],
+    "modules-left": ["hyprland/workspaces", "tray", "keyboard-state", "hyprland/submap", "custom/media"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/network", "bluetooth", "custom/caffeine", "custom/sysstats", "custom/media", "pulseaudio", "backlight", "battery", "clock"],
+    "modules-right": ["custom/network", "bluetooth", "custom/caffeine", "custom/sysstats", "pulseaudio", "backlight", "battery", "clock"],
     "custom/sysstats": {
         "exec": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/sysstats.sh status",
         "return-type": "json",
