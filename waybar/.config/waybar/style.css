@@ -17,6 +17,7 @@ window#waybar {
 #window,
 #submap,
 #custom-caffeine,
+#custom-media,
 #custom-sysstats,
 #custom-network,
 #tray,
@@ -46,6 +47,20 @@ window#waybar {
 }
 
 #custom-caffeine.off {
+    color: rgba(205, 214, 244, 0.45);
+}
+
+#custom-media.playing {
+    background: rgba(166, 227, 161, 0.22);
+    color: #a6e3a1;
+}
+
+#custom-media.paused {
+    background: rgba(249, 226, 175, 0.22);
+    color: #f9e2af;
+}
+
+#custom-media.idle {
     color: rgba(205, 214, 244, 0.45);
 }
 

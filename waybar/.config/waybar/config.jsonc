@@ -2,7 +2,7 @@
     "layer": "top",
     "modules-left": ["hyprland/workspaces", "tray", "keyboard-state", "hyprland/submap"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/network", "bluetooth", "custom/caffeine", "custom/sysstats", "pulseaudio", "backlight", "battery", "clock"],
+    "modules-right": ["custom/network", "bluetooth", "custom/caffeine", "custom/sysstats", "custom/media", "pulseaudio", "backlight", "battery", "clock"],
     "custom/sysstats": {
         "exec": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/sysstats.sh status",
         "return-type": "json",
@@ -45,6 +45,16 @@
         "return-type": "json",
         "interval": "once",
         "signal": 10
+    },
+    "custom/media": {
+        "exec": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/media.sh status",
+        "on-click": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/media.sh play-pause",
+        "on-click-middle": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/media.sh next",
+        "on-click-right": "/home/skydogzz/dotfiles/hypr/.config/hypr/scripts/media.sh previous",
+        "return-type": "json",
+        "interval": 3,
+        "signal": 11,
+        "max-length": 36
     },
     "hyprland/window": {
         "max-length": 50

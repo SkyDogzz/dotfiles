@@ -123,7 +123,8 @@ for cmd in \
   udiskie \
   rofi \
   hyprlock \
-  hypridle
+  hypridle \
+  playerctl
 do
   check_command "$cmd"
 done

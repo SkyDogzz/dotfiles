@@ -18,7 +18,7 @@
   - open `iwgtk`
   - toggle Wi-Fi if needed
   - display current network state
-- [ ] Add a media control script.
+- [x] Add a media control script.
   - play, pause, next, previous
   - show track info when available
 - [x] Add a clipboard cleanup script.
