@@ -5,6 +5,31 @@ launch_detached() {
     nohup "$@" >/dev/null 2>&1 &
 }
 
+launch_in_kitty() {
+    launch_detached kitty -e bash -lc "$*"
+}
+
+desktop_field() {
+    local field="$1"
+    local file="$2"
+    grep -m1 "^${field}=" "$file" | sed "s/^${field}=//"
+}
+
+launch_desktop() {
+    local desktop_id="$1"
+    local desktop_file="$2"
+    local terminal exec_line
+
+    terminal="$(desktop_field Terminal "$desktop_file")"
+    if [[ "$terminal" == true ]]; then
+        exec_line="$(desktop_field Exec "$desktop_file")"
+        exec_line="${exec_line//%[fFuUdDnNickvm]/}"
+        launch_in_kitty "$exec_line"
+    else
+        launch_detached gtk-launch "${desktop_id%.desktop}"
+    fi
+}
+
 if [ -n "${1:-}" ]; then
     # ROFI_INFO contains the .desktop filename set via \0info\x1f
     desktop="${ROFI_INFO:-$1}"
@@ -12,13 +37,13 @@ if [ -n "${1:-}" ]; then
         for dir in /usr/share/applications ~/.local/share/applications; do
             file="$dir/$desktop"
             if [ -f "$file" ]; then
-                launch_detached gtk-launch "${desktop%.desktop}"
+                launch_desktop "$desktop" "$file"
                 exit 0
             fi
         done
         exit 1
     fi
-    launch_detached "$*"
+    launch_in_kitty "$*"
     exit 0
 fi
 
