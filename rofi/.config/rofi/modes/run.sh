@@ -2,7 +2,7 @@
 set -euo pipefail
 
 launch_detached() {
-    nohup bash -lc "$1" >/dev/null 2>&1 &
+    nohup "$@" >/dev/null 2>&1 &
 }
 
 if [ -n "${1:-}" ]; then
@@ -12,7 +12,7 @@ if [ -n "${1:-}" ]; then
         for dir in /usr/share/applications ~/.local/share/applications; do
             file="$dir/$desktop"
             if [ -f "$file" ]; then
-                gtk-launch "${desktop%.desktop}"
+                launch_detached gtk-launch "${desktop%.desktop}"
                 exit 0
             fi
         done
