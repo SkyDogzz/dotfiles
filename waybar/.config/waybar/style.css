@@ -36,6 +36,10 @@ window#waybar {
     color: rgba(205, 214, 244, 0.45);
 }
 
+#keyboard-state label {
+    margin: 0 5px;
+}
+
 #custom-caffeine.on {
     background: rgba(250, 179, 135, 0.30);
     color: #fab387;
