@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+launch_detached() {
+    nohup bash -lc "$1" >/dev/null 2>&1 &
+}
+
 if [ -n "${1:-}" ]; then
     # ROFI_INFO contains the .desktop filename set via \0info\x1f
     desktop="${ROFI_INFO:-$1}"
@@ -8,14 +12,13 @@ if [ -n "${1:-}" ]; then
         for dir in /usr/share/applications ~/.local/share/applications; do
             file="$dir/$desktop"
             if [ -f "$file" ]; then
-                exec_line=$(grep -m1 '^Exec=' "$file" | sed 's/^Exec=//; s/%.//g')
-                eval "( $exec_line & )"
+                gtk-launch "${desktop%.desktop}"
                 exit 0
             fi
         done
         exit 1
     fi
-    eval "( $* & )"
+    launch_detached "$*"
     exit 0
 fi
 
