@@ -2,7 +2,9 @@
 set -euo pipefail
 
 cfg="$HOME/.config/hypr/hyprmonitors.conf"
-hyprpaper_cfg="$HOME/.config/hypr/hyprpaper.conf"
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr"
+hyprpaper_cfg="$cache_dir/hyprpaper.conf"
+default_hyprpaper_cfg="$HOME/.config/hypr/hyprpaper.conf"
 
 # Apply monitor settings before hyprpaper creates its layer surfaces.
 if [[ -f "$cfg" ]]; then
@@ -22,6 +24,10 @@ for _ in {1..20}; do
 done
 
 # Start hyprpaper only after the monitor layout is ready.
+mkdir -p "$cache_dir"
+if [[ ! -f "$hyprpaper_cfg" && -f "$default_hyprpaper_cfg" ]]; then
+  cp "$default_hyprpaper_cfg" "$hyprpaper_cfg"
+fi
 if ! pgrep -x hyprpaper >/dev/null 2>&1; then
   hyprpaper -c "$hyprpaper_cfg" &
   disown
@@ -37,7 +43,7 @@ done < "$cfg"
 
 # Get the current wallpaper path
 wallpaper_path=""
-for f in "$cfg" "$hyprpaper_cfg"; do
+for f in "$hyprpaper_cfg" "$default_hyprpaper_cfg"; do
   [[ -f "$f" ]] || continue
   wallpaper_path="$(grep -oP 'preload\s*=\s*\K\S+' "$f" 2>/dev/null | head -1 || true)"
   [[ -n "$wallpaper_path" ]] && break

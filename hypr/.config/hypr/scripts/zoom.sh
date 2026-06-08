@@ -156,7 +156,14 @@ else
   shift_others
 fi
 
-wallpaper_path=$(grep -oP 'preload\s*=\s*\K\S+' "$HOME/.config/hypr/hyprpaper.conf" | head -1) || true
+wallpaper_path=""
+state_file="${XDG_CACHE_HOME:-$HOME/.cache}/hypr/current_wallpaper"
+hyprpaper_conf="${XDG_CACHE_HOME:-$HOME/.cache}/hypr/hyprpaper.conf"
+if [[ -f "$state_file" ]]; then
+  wallpaper_path="$(<"$state_file")"
+elif [[ -f "$hyprpaper_conf" ]]; then
+  wallpaper_path=$(grep -oP 'preload\s*=\s*\K\S+' "$hyprpaper_conf" | head -1) || true
+fi
 if [[ -n "$wallpaper_path" ]]; then
   for name in "${names[@]}"; do
     hyprctl hyprpaper wallpaper "$name,$wallpaper_path,fill" 2>/dev/null || true

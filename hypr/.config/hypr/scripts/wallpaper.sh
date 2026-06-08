@@ -2,8 +2,8 @@
 set -euo pipefail
 
 wallpaper_dir="$HOME/.config/hypr/wallpapers"
-hyprpaper_conf="$HOME/.config/hypr/hyprpaper.conf"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr"
+hyprpaper_conf="$cache_dir/hyprpaper.conf"
 state_file="$cache_dir/current_wallpaper"
 
 get_wallpapers() {
