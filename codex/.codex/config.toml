@@ -13,7 +13,7 @@ status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branc
 status_line_use_colors = true
 
 [tui.model_availability_nux]
-"gpt-5.5" = 1
+"gpt-5.5" = 2
 
 # OpenCode permission policy reference
 # Codex does not expose the same granular allow/deny permission table in this
