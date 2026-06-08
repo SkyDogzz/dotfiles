@@ -1,0 +1,139 @@
+:root {
+  --ctp-rosewater: #f5e0dc;
+  --ctp-flamingo: #f2cdcd;
+  --ctp-pink: #f5c2e7;
+  --ctp-mauve: #cba6f7;
+  --ctp-red: #f38ba8;
+  --ctp-maroon: #eba0ac;
+  --ctp-peach: #fab387;
+  --ctp-yellow: #f9e2af;
+  --ctp-green: #a6e3a1;
+  --ctp-teal: #94e2d5;
+  --ctp-sky: #89dceb;
+  --ctp-sapphire: #74c7ec;
+  --ctp-blue: #89b4fa;
+  --ctp-lavender: #b4befe;
+  --ctp-text: #cdd6f4;
+  --ctp-subtext-1: #bac2de;
+  --ctp-subtext-0: #a6adc8;
+  --ctp-overlay-2: #9399b2;
+  --ctp-overlay-1: #7f849c;
+  --ctp-overlay-0: #6c7086;
+  --ctp-surface-2: #585b70;
+  --ctp-surface-1: #45475a;
+  --ctp-surface-0: #313244;
+  --ctp-base: #1e1e2e;
+  --ctp-mantle: #181825;
+  --ctp-crust: #11111b;
+  color-scheme: dark;
+}
+
+:root {
+  --arrowpanel-background: var(--ctp-mantle) !important;
+  --arrowpanel-color: var(--ctp-text) !important;
+  --autocomplete-popup-background: var(--ctp-mantle) !important;
+  --autocomplete-popup-color: var(--ctp-text) !important;
+  --chrome-content-separator-color: var(--ctp-surface-0) !important;
+  --lwt-accent-color: var(--ctp-mantle) !important;
+  --lwt-background-alignment: center !important;
+  --lwt-background-tiling: no-repeat !important;
+  --lwt-text-color: var(--ctp-text) !important;
+  --tab-selected-bgcolor: var(--ctp-base) !important;
+  --tab-selected-textcolor: var(--ctp-text) !important;
+  --toolbar-bgcolor: var(--ctp-base) !important;
+  --toolbar-color: var(--ctp-text) !important;
+  --toolbar-field-background-color: var(--ctp-crust) !important;
+  --toolbar-field-color: var(--ctp-text) !important;
+  --toolbar-field-focus-background-color: var(--ctp-crust) !important;
+  --toolbar-field-focus-color: var(--ctp-text) !important;
+  --toolbar-field-border-color: var(--ctp-surface-0) !important;
+}
+
+#navigator-toolbox {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ctp-mantle) 88%, transparent), var(--ctp-base)) !important;
+  border-bottom: 1px solid var(--ctp-surface-0) !important;
+}
+
+#TabsToolbar,
+#PersonalToolbar,
+#nav-bar {
+  background: transparent !important;
+}
+
+#TabsToolbar {
+  color: var(--ctp-text) !important;
+}
+
+#tabbrowser-tabs {
+  --tab-border-radius: 12px;
+  --tab-min-height: 34px;
+}
+
+.tabbrowser-tab {
+  margin-inline: 2px !important;
+}
+
+.tabbrowser-tab > .tab-stack > .tab-content {
+  margin-block: 4px 0 !important;
+  border-radius: 12px 12px 0 0 !important;
+  color: var(--ctp-subtext-0) !important;
+}
+
+.tabbrowser-tab[selected="true"] > .tab-stack > .tab-content {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--ctp-surface-0) 75%, transparent), var(--ctp-base)) !important;
+  color: var(--ctp-text) !important;
+}
+
+.tabbrowser-tab:hover > .tab-stack > .tab-content {
+  color: var(--ctp-text) !important;
+}
+
+#nav-bar {
+  border-top: 1px solid color-mix(in srgb, var(--ctp-surface-0) 80%, transparent) !important;
+  color: var(--ctp-text) !important;
+}
+
+#urlbar-background,
+#searchbar {
+  background: var(--ctp-crust) !important;
+  border: 1px solid var(--ctp-surface-0) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+
+#urlbar-input-container,
+#urlbar-input,
+.searchbar-textbox {
+  color: var(--ctp-text) !important;
+}
+
+#urlbar-results,
+#urlbar-view-box,
+.urlbarView {
+  background: var(--ctp-mantle) !important;
+  color: var(--ctp-text) !important;
+}
+
+#PlacesToolbarItems,
+toolbarbutton,
+.toolbarbutton-1 {
+  color: var(--ctp-subtext-0) !important;
+}
+
+toolbarbutton:hover,
+.toolbarbutton-1:hover {
+  color: var(--ctp-text) !important;
+}
+
+#sidebar-box,
+#sidebar-header {
+  background: var(--ctp-mantle) !important;
+  color: var(--ctp-text) !important;
+  border-color: var(--ctp-surface-0) !important;
+}
+
+#appcontent browser,
+browser {
+  background: var(--ctp-base) !important;
+}

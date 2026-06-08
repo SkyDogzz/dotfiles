@@ -59,6 +59,7 @@
 - [x] `atuin` — Catppuccin Mocha theme
 - [x] `zsh-syntax-highlighting` — Catppuccin Mocha colors
 - [x] `hyprlock` — Catppuccin Mocha colors
+- [x] `firefox` — Catppuccin Mocha browser UI and built-in pages
 - [x] `stow-all` — apply all Stow packages except ignored ones
 - [x] `gen-completions` — generate shell completions for installed tools
 - [x] `check-ai-models` — check local Ollama model availability

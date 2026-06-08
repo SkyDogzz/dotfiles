@@ -155,3 +155,6 @@ compinit
 fpath+=~/.zsh/completions
 # opencode
 export PATH=/home/skydogzz/.opencode/bin:$PATH
+
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"

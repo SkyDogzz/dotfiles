@@ -1,0 +1,48 @@
+@-moz-document url("about:home"), url("about:newtab"), url("about:privatebrowsing"), url("about:preferences"), url("about:addons") {
+  :root {
+    color-scheme: dark !important;
+    --ctp-text: #cdd6f4;
+    --ctp-subtext-0: #a6adc8;
+    --ctp-surface-0: #313244;
+    --ctp-base: #1e1e2e;
+    --ctp-mantle: #181825;
+    --ctp-crust: #11111b;
+  }
+
+  html,
+  body,
+  .activity-stream,
+  .outer-wrapper,
+  .search-wrapper,
+  .prefs-pane,
+  .main-content {
+    background-color: var(--ctp-base) !important;
+    color: var(--ctp-text) !important;
+  }
+
+  .search-wrapper input,
+  .search-wrapper .search-handoff-button,
+  input,
+  textarea,
+  select {
+    background: var(--ctp-crust) !important;
+    border: 1px solid var(--ctp-surface-0) !important;
+    color: var(--ctp-text) !important;
+  }
+
+  a,
+  a:visited {
+    color: #89b4fa !important;
+  }
+
+  button {
+    background: var(--ctp-mantle) !important;
+    border: 1px solid var(--ctp-surface-0) !important;
+    color: var(--ctp-text) !important;
+  }
+
+  ::selection {
+    background: #cba6f7 !important;
+    color: #11111b !important;
+  }
+}

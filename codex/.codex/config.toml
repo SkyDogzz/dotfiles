@@ -5,9 +5,15 @@ approvals_reviewer = "guardian_subagent"
 [projects."/home/skydogzz/dotfiles"]
 trust_level = "trusted"
 
+[projects."/home/skydogzz"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "branch-changes", "run-state", "permissions", "context-remaining", "five-hour-limit", "weekly-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress"]
 status_line_use_colors = true
+
+[tui.model_availability_nux]
+"gpt-5.5" = 1
 
 # OpenCode permission policy reference
 # Codex does not expose the same granular allow/deny permission table in this

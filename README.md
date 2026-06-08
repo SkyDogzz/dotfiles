@@ -8,6 +8,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `kitty` — terminal (Catppuccin Mocha theme)
 - `waybar` — status bar (Catppuccin Mocha colors)
 - `rofi` — launcher (Catppuccin Mocha theme)
+- `firefox` — Firefox UI and built-in pages (Catppuccin Mocha, fully dotfiles-based)
 - `dunst` — notification daemon
 - `udiskie` — automount setup
 - `nvim` — Neovim editor settings (catppuccin/nvim)
@@ -35,3 +36,4 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - All apps follow the `XDG` layout under their respective directory.
 - Some configs assume Wayland tools like `wl-clipboard`, `brightnessctl`, and `wpctl`.
 - Hyprland starts desktop helpers directly from its config.
+- The Firefox package targets the `default-release` profile folder; rename that directory if your profile uses a different name.

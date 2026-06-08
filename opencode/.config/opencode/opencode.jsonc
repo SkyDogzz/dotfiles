@@ -5,8 +5,8 @@
   "$schema": "https://opencode.ai/config.json",
   // "model": "ollama/qwen3.5:9b",
   // "small_model": "ollama/qwen3.5:4b",
-  "model": "opencode/deepseek-v4-flash-free",
-  "small_model": "opencode/deepseek-v4-flash-free",
+  "model": "openrouter/deepseek/deepseek-v4-flash",
+  "small_model": "openrouter/deepseek/deepseek-v4-flash",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -214,10 +214,10 @@
   // },
   "agent": {
     "plan": {
-      "model": "opencode/deepseek-v4-flash-free"
+      "model": "openrouter/deepseek/deepseek-v4-flash"
     },
     "build": {
-      "model": "opencode/deepseek-v4-flash-free"
+      "model": "openrouter/deepseek/deepseek-v4-flash"
     }
   },
   "plugin": [
