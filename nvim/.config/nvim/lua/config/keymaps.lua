@@ -12,3 +12,7 @@ vim.keymap.set("n", "<leader>wo", "<C-w>o", { desc = "Only window" })
 vim.keymap.set("n", "<leader>w=", "<C-w>=", { desc = "Equalize window sizes" })
 vim.keymap.set("n", "<leader>wx", "<C-w>x", { desc = "Exchange window" })
 vim.keymap.set("n", "<leader>wt", "<C-w>T", { desc = "Move window to tab" })
+
+vim.keymap.set("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
+vim.keymap.set("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Delete buffer" })
