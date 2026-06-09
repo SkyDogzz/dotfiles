@@ -3,3 +3,6 @@ zsh/.zsh/completions/
 
 # Firefox local profile/runtime data
 firefox/.mozilla/firefox/
+
+# Python bytecode caches
+__pycache__/

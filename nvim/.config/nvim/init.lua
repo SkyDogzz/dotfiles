@@ -1,4 +1,5 @@
 require("config.options")
+require("config.keymaps")
 
 vim.treesitter = vim.treesitter or {}
 vim.treesitter.language = vim.treesitter.language or {}

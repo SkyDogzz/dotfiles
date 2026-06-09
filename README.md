@@ -22,6 +22,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `scripts/stow-all` — apply all Stow packages except ignored ones
 - `scripts/gen-completions` — generate shell completions for installed tools
 - `scripts/check-ai-models.sh` — check local Ollama model availability
+- `scripts/ollama-tools` — local CLI tool loop for Ollama models
 - `scripts/update-system` — system upgrade helper for Arch
 - `scripts/stow-healthcheck` — dry-run Stow validation across packages
 - `scripts/check-symlinks` — verify symlinks point back to the repo

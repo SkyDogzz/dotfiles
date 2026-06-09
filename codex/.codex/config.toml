@@ -8,6 +8,12 @@ trust_level = "trusted"
 [projects."/home/skydogzz"]
 trust_level = "trusted"
 
+[projects."/home/skydogzz/insanity/scop"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/insanity/small-agent"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "branch-changes", "run-state", "permissions", "context-remaining", "five-hour-limit", "weekly-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress"]
 status_line_use_colors = true

@@ -1,0 +1,213 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+model="${OLLAMA_TOOL_MODEL:-qwen2.5-coder:7b}"
+max_steps="${OLLAMA_TOOL_MAX_STEPS:-32}"
+reasoning="${OLLAMA_TOOL_REASONING:-brief}"
+strictness="${OLLAMA_TOOL_STRICTNESS:-permissive}"
+cwd="${PWD}"
+
+usage() {
+    cat <<'EOF'
+Usage:
+  ollama-tools <task>
+
+Environment:
+  OLLAMA_TOOL_MODEL     Ollama model name without provider prefix (default: qwen2.5-coder:7b)
+  OLLAMA_TOOL_MAX_STEPS Maximum tool loop steps (default: 32)
+  OLLAMA_TOOL_REASONING Prompt style: brief, explicit, or thorough (default: brief)
+  OLLAMA_TOOL_STRICTNESS Prompt discipline: permissive or strict (default: permissive)
+
+Tools:
+  TOOL glob <pattern>    list files matching a glob pattern in the current directory
+  TOOL read <path>       print a text file
+  TOOL bash <command>    run a shell command in the current directory
+  TOOL pwd               print the current directory
+  DONE <answer>          finish and print the final answer
+EOF
+}
+
+tool_glob() {
+    local pattern="$1"
+    local -a matches=()
+    local path
+
+    if [[ -z "$pattern" ]]; then
+        pattern='*'
+    fi
+
+    shopt -s nullglob dotglob
+    for path in "$cwd"/$pattern; do
+        [[ -e "$path" ]] || continue
+        matches+=("${path#"$cwd"/}")
+    done
+    shopt -u nullglob dotglob
+
+    if ((${#matches[@]} == 0)); then
+        printf '(no matches)\n'
+        return
+    fi
+
+    printf '%s\n' "${matches[@]}" | sort
+}
+
+tool_read() {
+    local path="$1"
+    local target
+
+    if [[ -z "$path" ]]; then
+        printf 'ERROR: missing path\n'
+        return 1
+    fi
+
+    if [[ "$path" = /* ]]; then
+        target="$path"
+    else
+        target="$cwd/$path"
+    fi
+
+    if [[ ! -e "$target" ]]; then
+        printf 'ERROR: path not found: %s\n' "$path"
+        return 1
+    fi
+
+    if [[ -d "$target" ]]; then
+        printf 'ERROR: path is a directory: %s\n' "$path"
+        return 1
+    fi
+
+    sed -n '1,200p' "$target"
+}
+
+tool_bash() {
+    local command="$1"
+
+    if [[ -z "$command" ]]; then
+        printf 'ERROR: missing command\n'
+        return 1
+    fi
+
+    (
+        cd "$cwd"
+        bash -lc "$command"
+    )
+}
+
+run_model() {
+    local prompt="$1"
+    printf '%s\n' "$prompt" | ollama run "$model" 2>/dev/null | awk 'NF { sub(/^[[:space:]]+/, ""); sub(/[[:space:]]+$/, ""); print; exit }'
+}
+
+task="${*:-}"
+if [[ -z "$task" ]]; then
+    usage
+    exit 1
+fi
+
+if ! command -v ollama >/dev/null 2>&1; then
+    printf 'ERROR: ollama is not installed or not on PATH\n' >&2
+    exit 1
+fi
+
+system_prompt=$(
+    cat <<'EOF'
+You are a local command-line agent.
+Think silently before each step, then respond with exactly one line and nothing else.
+All tools below are available. Use the most direct one.
+
+Allowed formats:
+TOOL glob <pattern>
+TOOL read <path>
+TOOL bash <command>
+TOOL pwd
+DONE <final answer>
+
+Rules:
+- If the task asks for files in the current folder, start with TOOL glob *.
+- If the task asks what the repository is, inspect README.md first.
+- If the task asks what is configured for a subsystem, inspect the matching top-level package docs or config files next.
+- If the task needs more than one file, keep looping until you have enough evidence.
+- Use TOOL read to inspect a file by exact path only.
+- Use TOOL bash whenever it is the most direct way to complete the task.
+- Never output JSON, markdown, bullets, code fences, explanations, or fake tool syntax.
+- Never describe the tool to use. Emit the tool call directly.
+- Never invent file paths or shell commands.
+- Never answer from glob output alone if the task requires interpretation.
+- If you already have enough information, use DONE.
+EOF
+)
+
+history=""
+
+for step in $(seq 1 "$max_steps"); do
+    prompt="${system_prompt}
+
+Current directory: ${cwd}
+Task: ${task}
+Reasoning style: ${reasoning}
+Strictness: ${strictness}
+
+Conversation so far:
+${history}
+
+Respond now with exactly one line."
+
+    response="$(run_model "$prompt" || true)"
+
+    if [[ -z "$response" ]]; then
+        history+=$'ASSISTANT: \nSYSTEM: Invalid empty response. Reply with exactly one line using TOOL or DONE.\n'
+        continue
+    fi
+
+    case "$response" in
+    TOOL\ glob\ "*")
+        ;;
+    TOOL\ glob\ *)
+        ;;
+    TOOL\ read\ *)
+        ;;
+    TOOL\ bash\ *)
+        ;;
+    TOOL\ pwd)
+        ;;
+    DONE\ *)
+        ;;
+    *)
+        history+=$'ASSISTANT: '"$response"$'\nSYSTEM: Invalid response. Use exactly one line in the format TOOL glob <pattern>, TOOL read <path>, TOOL bash <command>, TOOL pwd, or DONE <answer>.\n'
+        continue
+        ;;
+    esac
+
+    case "$response" in
+    DONE\ *)
+        printf '%s\n' "${response#DONE }"
+        exit 0
+        ;;
+    TOOL\ glob\ *)
+        tool_output="$(tool_glob "${response#TOOL glob }")"
+        printf '[tool glob] %s\n' "${response#TOOL glob }"
+        printf '%s\n' "$tool_output"
+        history+=$'ASSISTANT: '"$response"$'\nTOOL RESULT:\n'"$tool_output"$'\n'
+        ;;
+    TOOL\ read\ *)
+        tool_output="$(tool_read "${response#TOOL read }" || true)"
+        printf '[tool read] %s\n' "${response#TOOL read }"
+        printf '%s\n' "$tool_output"
+        history+=$'ASSISTANT: '"$response"$'\nTOOL RESULT:\n'"$tool_output"$'\n'
+        ;;
+    TOOL\ bash\ *)
+        tool_output="$(tool_bash "${response#TOOL bash }" 2>&1 || true)"
+        printf '[tool bash] %s\n' "${response#TOOL bash }"
+        printf '%s\n' "$tool_output"
+        history+=$'ASSISTANT: '"$response"$'\nTOOL RESULT:\n'"$tool_output"$'\n'
+        ;;
+    TOOL\ pwd)
+        tool_output="$cwd"
+        printf '[tool pwd]\n%s\n' "$tool_output"
+        history+=$'ASSISTANT: TOOL pwd\nTOOL RESULT:\n'"$tool_output"$'\n'
+        ;;
+    esac
+done
+
+printf 'ERROR: reached max steps without a final answer\n' >&2
+exit 1
