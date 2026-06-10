@@ -15,7 +15,17 @@ return {
       { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
-      { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "Grep string" },
+      {
+        "<leader>fs",
+        function()
+          require("telescope.builtin").live_grep({
+            additional_args = function()
+              return { "--hidden", "--no-ignore", "--fixed-strings" }
+            end,
+          })
+        end,
+        desc = "Grep string",
+      },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Search keymaps" },
     },
     opts = {
