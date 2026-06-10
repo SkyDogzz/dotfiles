@@ -1,4 +1,5 @@
 # Created by newuser for 5.9.1
+bindkey -v
 bindkey -M emacs '^[[1;5D' backward-word
 bindkey -M emacs '^[[1;5C' forward-word
 bindkey -M viins '^[[1;5D' backward-word
@@ -11,6 +12,14 @@ bindkey -M emacs '^R' history-incremental-search-backward
 bindkey -M emacs '^[[3~' delete-char
 bindkey -M emacs '^[[H' beginning-of-line
 bindkey -M emacs '^[[F' end-of-line
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
+bindkey -M viins '^U' kill-whole-line
+bindkey -M viins '^W' backward-kill-word
+bindkey -M viins '^R' history-incremental-search-backward
+bindkey -M viins '^[[3~' delete-char
+bindkey -M viins '^[[H' beginning-of-line
+bindkey -M viins '^[[F' end-of-line
 
 export EDITOR=nvim
 

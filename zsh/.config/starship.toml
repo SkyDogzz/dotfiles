@@ -23,11 +23,11 @@ $python\
 [](fg:green bg:sapphire)\
 $conda\
 [](fg:sapphire bg:lavender)\
-$time\
 [ ](fg:lavender)\
-$cmd_duration\
 $line_break\
 $character"""
+
+right_format = "$cmd_duration$time"
 
 palette = 'catppuccin_mocha'
 
