@@ -62,6 +62,17 @@ current_profile() {
   fi
 }
 
+reconcile_state() {
+  local profile
+
+  [[ -f "$enabled_file" ]] || return 0
+
+  profile="$(current_profile)"
+  if [[ "$profile" != "power-saver" && "$profile" != "unknown" ]]; then
+    clear_state
+  fi
+}
+
 read_value() {
   cat "$1" 2>/dev/null || true
 }
@@ -87,6 +98,7 @@ current_brightness_percent() {
 }
 
 is_enabled() {
+  reconcile_state
   [[ -f "$enabled_file" ]]
 }
 
@@ -372,11 +384,20 @@ status() {
   local profile text tooltip class
 
   profile="$(current_profile)"
+  reconcile_state
 
-  if is_enabled; then
+  if [[ -f "$enabled_file" && "$profile" == "power-saver" ]]; then
     text="LP"
     class="on"
     printf -v tooltip 'Low Power Mode: ON\nPower profile: %s\nDisplay refresh: 60 Hz\nClick to restore the previous state' "$profile"
+  elif [[ -f "$enabled_file" ]]; then
+    text="LP"
+    class="stale"
+    if [[ "$profile" == "unknown" ]]; then
+      printf -v tooltip 'Low Power Mode cache is set, but powerprofilesctl is unreachable\nClick to clear the cached state'
+    else
+      printf -v tooltip 'Low Power Mode cache is set, but power profile is %s\nClick to clear the cached state' "$profile"
+    fi
   else
     text="LP"
     class="off"
