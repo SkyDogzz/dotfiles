@@ -26,6 +26,13 @@ sort_dir_first = true
 wrap = "yes"
 tab_size = 4
 
+[plugin]
+prepend_previewers = [
+  { mime = "text/markdown", run = "glow" },
+  { mime = "text/x-markdown", run = "glow" },
+  { url = "README*", run = "glow" },
+]
+
 [tasks]
 file_workers = 4
 plugin_workers = 2
