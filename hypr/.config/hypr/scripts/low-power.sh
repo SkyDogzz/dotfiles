@@ -6,9 +6,6 @@ enabled_file="$cache_dir/enabled"
 profile_file="$cache_dir/profile"
 monitors_file="$cache_dir/monitors.json"
 brightness_file="$cache_dir/brightness"
-cpu_state_file="$cache_dir/cpu-state.tsv"
-cpu_boost_file="$cache_dir/cpu-boost"
-gpu_state_file="$cache_dir/gpu-state.tsv"
 
 usage() {
   printf 'usage: %s {toggle|on|off|status}\n' "${0##*/}" >&2
@@ -17,26 +14,6 @@ usage() {
 
 have_cmd() {
   command -v "$1" >/dev/null 2>&1
-}
-
-write_value() {
-  local path="$1"
-  local value="$2"
-
-  if [[ -w "$path" ]]; then
-    printf '%s' "$value" > "$path"
-    return 0
-  fi
-
-  if have_cmd pkexec; then
-    pkexec /bin/sh -c 'printf %s "$2" > "$1"' sh "$path" "$value" >/dev/null 2>&1 && return 0
-  fi
-
-  if have_cmd sudo; then
-    sudo -n /bin/sh -c 'printf %s "$2" > "$1"' sh "$path" "$value" >/dev/null 2>&1 && return 0
-  fi
-
-  return 1
 }
 
 json() {
@@ -71,10 +48,6 @@ reconcile_state() {
   if [[ "$profile" != "power-saver" && "$profile" != "unknown" ]]; then
     clear_state
   fi
-}
-
-read_value() {
-  cat "$1" 2>/dev/null || true
 }
 
 current_brightness_percent() {
@@ -113,9 +86,6 @@ save_state() {
   if have_cmd hyprctl; then
     hyprctl monitors -j > "$monitors_file"
   fi
-
-  save_cpu_state
-  save_gpu_state
 }
 
 mark_enabled() {
@@ -123,64 +93,8 @@ mark_enabled() {
 }
 
 clear_state() {
-  rm -f "$enabled_file" "$profile_file" "$monitors_file" "$brightness_file" "$cpu_state_file" "$cpu_boost_file" "$gpu_state_file"
+  rm -f "$enabled_file" "$profile_file" "$monitors_file" "$brightness_file"
   rmdir "$cache_dir" 2>/dev/null || true
-}
-
-save_cpu_state() {
-  local policy epp gov
-
-  : > "$cpu_state_file"
-
-  if [[ -e /sys/devices/system/cpu/cpufreq/boost ]]; then
-    read_value /sys/devices/system/cpu/cpufreq/boost > "$cpu_boost_file"
-  fi
-
-  for policy in /sys/devices/system/cpu/cpufreq/policy*; do
-    [[ -d "$policy" ]] || continue
-
-    epp="$policy/energy_performance_preference"
-    gov="$policy/scaling_governor"
-
-    if [[ -e "$epp" ]]; then
-      printf '%s\t%s\t%s\n' \
-        "$epp" \
-        "$(read_value "$epp")" \
-        "$(read_value "$gov")" >> "$cpu_state_file"
-    elif [[ -e "$gov" ]]; then
-      printf '%s\t%s\t%s\n' \
-        "$gov" \
-        "$(read_value "$gov")" \
-        "" >> "$cpu_state_file"
-    fi
-  done
-}
-
-save_gpu_state() {
-  local device perf control vendor
-
-  : > "$gpu_state_file"
-
-  for device in /sys/class/drm/card*/device; do
-    [[ -d "$device" ]] || continue
-    vendor="$(read_value "$device/vendor")"
-    [[ "$vendor" == "0x1002" ]] || continue
-
-    perf="$device/power_dpm_force_performance_level"
-    control="$device/power/control"
-
-    if [[ -e "$perf" ]]; then
-      printf '%s\t%s\t%s\n' \
-        "$perf" \
-        "$(read_value "$perf")" \
-        "$(read_value "$control")" >> "$gpu_state_file"
-    elif [[ -e "$control" ]]; then
-      printf '%s\t%s\t%s\n' \
-        "$control" \
-        "$(read_value "$control")" \
-        "" >> "$gpu_state_file"
-    fi
-  done
 }
 
 set_power_profile() {
@@ -192,6 +106,16 @@ set_power_profile() {
   fi
 
   return 1
+}
+
+fallback_profile() {
+  local saved="${1:-}"
+
+  if [[ -n "$saved" && "$saved" != "power-saver" ]]; then
+    printf '%s\n' "$saved"
+  else
+    printf 'balanced\n'
+  fi
 }
 
 apply_monitor_refresh() {
@@ -226,50 +150,6 @@ apply_brightness_cap() {
   fi
 }
 
-apply_cpu_low_power() {
-  local policy epp gov
-
-  if [[ -e /sys/devices/system/cpu/cpufreq/boost ]]; then
-    write_value /sys/devices/system/cpu/cpufreq/boost 0 || true
-  fi
-
-  for policy in /sys/devices/system/cpu/cpufreq/policy*; do
-    [[ -d "$policy" ]] || continue
-
-    epp="$policy/energy_performance_preference"
-    gov="$policy/scaling_governor"
-
-    if [[ -e "$epp" ]]; then
-      write_value "$epp" power || true
-    fi
-
-    if [[ -e "$gov" ]] && grep -q '\bpowersave\b' "$policy/scaling_available_governors" 2>/dev/null; then
-      write_value "$gov" powersave || true
-    fi
-  done
-}
-
-apply_gpu_low_power() {
-  local device perf control vendor
-
-  for device in /sys/class/drm/card*/device; do
-    [[ -d "$device" ]] || continue
-    vendor="$(read_value "$device/vendor")"
-    [[ "$vendor" == "0x1002" ]] || continue
-
-    perf="$device/power_dpm_force_performance_level"
-    control="$device/power/control"
-
-    if [[ -e "$perf" ]]; then
-      write_value "$perf" low || true
-    fi
-
-    if [[ -e "$control" ]]; then
-      write_value "$control" auto || true
-    fi
-  done
-}
-
 restore_brightness() {
   local current
 
@@ -281,46 +161,6 @@ restore_brightness() {
   if [[ "$current" =~ ^[0-9]+$ ]]; then
     brightnessctl set "${current}%" >/dev/null 2>&1 || true
   fi
-}
-
-restore_cpu_state() {
-  local path value gov
-
-  if [[ -e /sys/devices/system/cpu/cpufreq/boost && -f "$cpu_boost_file" ]]; then
-    write_value /sys/devices/system/cpu/cpufreq/boost "$(read_value "$cpu_boost_file")" || true
-  fi
-
-  if [[ ! -f "$cpu_state_file" ]]; then
-    return
-  fi
-
-  while IFS=$'\t' read -r path value gov; do
-    [[ -n "$path" ]] || continue
-    [[ -e "$path" ]] || continue
-    write_value "$path" "$value" || true
-    if [[ -n "$gov" && "$path" == *"/energy_performance_preference" ]]; then
-      local gov_path="${path%/energy_performance_preference}/scaling_governor"
-      [[ -e "$gov_path" ]] && write_value "$gov_path" "$gov" || true
-    fi
-  done < "$cpu_state_file"
-}
-
-restore_gpu_state() {
-  local path value control
-
-  if [[ ! -f "$gpu_state_file" ]]; then
-    return
-  fi
-
-  while IFS=$'\t' read -r path value control; do
-    [[ -n "$path" ]] || continue
-    [[ -e "$path" ]] || continue
-    write_value "$path" "$value" || true
-    if [[ -n "$control" && "$path" == *"/power_dpm_force_performance_level" ]]; then
-      local control_path="${path%/power_dpm_force_performance_level}/power/control"
-      [[ -e "$control_path" ]] && write_value "$control_path" "$control" || true
-    fi
-  done < "$gpu_state_file"
 }
 
 restore_monitor_refresh() {
@@ -351,11 +191,9 @@ enable() {
     return 1
   fi
 
-  mark_enabled
-  apply_cpu_low_power
-  apply_gpu_low_power
   apply_monitor_refresh "$monitors_file" "60"
   apply_brightness_cap
+  mark_enabled
   notify_mode "Enabled: power-saver profile, 60 Hz display refresh, and brightness cap"
   waybar_signal
 }
@@ -365,12 +203,20 @@ disable() {
     return
   fi
 
+  local saved_profile target_profile
+
   if [[ -f "$profile_file" ]]; then
-    set_power_profile "$(cat "$profile_file")"
+    saved_profile="$(cat "$profile_file")"
+    target_profile="$(fallback_profile "$saved_profile")"
+  else
+    target_profile="balanced"
   fi
 
-  restore_cpu_state
-  restore_gpu_state
+  if ! set_power_profile "$target_profile"; then
+    notify_mode "Failed: could not switch power profile to ${target_profile}"
+    return 1
+  fi
+
   restore_monitor_refresh
   restore_brightness
 
