@@ -104,8 +104,15 @@ save_state() {
 
   save_cpu_state
   save_gpu_state
+}
 
+mark_enabled() {
   : > "$enabled_file"
+}
+
+clear_state() {
+  rm -f "$enabled_file" "$profile_file" "$monitors_file" "$brightness_file" "$cpu_state_file" "$cpu_boost_file" "$gpu_state_file"
+  rmdir "$cache_dir" 2>/dev/null || true
 }
 
 save_cpu_state() {
@@ -168,8 +175,11 @@ set_power_profile() {
   local profile="$1"
 
   if have_cmd powerprofilesctl; then
-    powerprofilesctl set "$profile" >/dev/null 2>&1 || true
+    powerprofilesctl set "$profile" >/dev/null 2>&1
+    return $?
   fi
+
+  return 1
 }
 
 apply_monitor_refresh() {
@@ -323,7 +333,13 @@ enable() {
   fi
 
   save_state
-  set_power_profile power-saver
+  if ! set_power_profile power-saver; then
+    clear_state
+    notify_mode "Failed: power-profiles-daemon is unavailable"
+    return 1
+  fi
+
+  mark_enabled
   apply_cpu_low_power
   apply_gpu_low_power
   apply_monitor_refresh "$monitors_file" "60"
@@ -346,8 +362,7 @@ disable() {
   restore_monitor_refresh
   restore_brightness
 
-  rm -f "$enabled_file" "$profile_file" "$monitors_file" "$brightness_file" "$cpu_state_file" "$cpu_boost_file" "$gpu_state_file"
-  rmdir "$cache_dir" 2>/dev/null || true
+  clear_state
 
   notify_mode "Disabled: restored previous power profile, display refresh, and brightness"
   waybar_signal
