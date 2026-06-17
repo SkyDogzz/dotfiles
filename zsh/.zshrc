@@ -18,6 +18,8 @@ bindkey_emacs '^H' backward-delete-char
 bindkey_emacs '^?' backward-delete-char
 bindkey_emacs '^[[8;5~' backward-kill-word
 bindkey_emacs '^[[127;5~' backward-kill-word
+bindkey_emacs '^[^?' backward-kill-word
+bindkey_emacs '^[[3;3~' kill-word
 bindkey_emacs '^[[3;5~' kill-word
 bindkey_emacs '^[[3~' delete-char
 bindkey_emacs '^R' history-incremental-search-backward
