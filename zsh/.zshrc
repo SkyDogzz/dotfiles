@@ -1,25 +1,28 @@
 # Created by newuser for 5.9.1
-bindkey -v
-bindkey -M emacs '^[[1;5D' backward-word
-bindkey -M emacs '^[[1;5C' forward-word
-bindkey -M viins '^[[1;5D' backward-word
-bindkey -M viins '^[[1;5C' forward-word
-bindkey -M emacs '^A' beginning-of-line
-bindkey -M emacs '^E' end-of-line
-bindkey -M emacs '^U' kill-whole-line
-bindkey -M emacs '^W' backward-kill-word
-bindkey -M emacs '^R' history-incremental-search-backward
-bindkey -M emacs '^[[3~' delete-char
-bindkey -M emacs '^[[H' beginning-of-line
-bindkey -M emacs '^[[F' end-of-line
-bindkey -M viins '^A' beginning-of-line
-bindkey -M viins '^E' end-of-line
-bindkey -M viins '^U' kill-whole-line
-bindkey -M viins '^W' backward-kill-word
-bindkey -M viins '^R' history-incremental-search-backward
-bindkey -M viins '^[[3~' delete-char
-bindkey -M viins '^[[H' beginning-of-line
-bindkey -M viins '^[[F' end-of-line
+bindkey -e
+bindkey_emacs() {
+  bindkey -M emacs "$1" "$2"
+}
+
+bindkey_emacs '^[[1;5D' backward-word
+bindkey_emacs '^[[1;5C' forward-word
+bindkey_emacs '^[[1;3D' backward-word
+bindkey_emacs '^[[1;3C' forward-word
+bindkey_emacs '^[b' backward-word
+bindkey_emacs '^[f' forward-word
+bindkey_emacs '^A' beginning-of-line
+bindkey_emacs '^E' end-of-line
+bindkey_emacs '^U' kill-whole-line
+bindkey_emacs '^W' backward-kill-word
+bindkey_emacs '^H' backward-delete-char
+bindkey_emacs '^?' backward-delete-char
+bindkey_emacs '^[[8;5~' backward-kill-word
+bindkey_emacs '^[[127;5~' backward-kill-word
+bindkey_emacs '^[[3;5~' kill-word
+bindkey_emacs '^[[3~' delete-char
+bindkey_emacs '^R' history-incremental-search-backward
+bindkey_emacs '^[[H' beginning-of-line
+bindkey_emacs '^[[F' end-of-line
 
 export EDITOR=nvim
 
