@@ -13,11 +13,29 @@ is_on() {
   [[ -f "$state_file" ]]
 }
 
+have_cmd() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+restore_brightness() {
+  if have_cmd brightnessctl; then
+    brightnessctl -r >/dev/null 2>&1 || true
+  fi
+}
+
+turn_display_on() {
+  if have_cmd hyprctl; then
+    hyprctl dispatch dpms on >/dev/null 2>&1 || true
+  fi
+}
+
 enable() {
   mkdir -p "$cache_dir"
   touch "$state_file"
   pkill hypridle 2>/dev/null || true
-  notify-send -a "Hyprland" "Caffeine" "Enabled — idle disabled"
+  turn_display_on
+  restore_brightness
+  notify-send -a "Hyprland" "Caffeine" "Enabled — idle and dimming disabled"
 }
 
 disable() {
