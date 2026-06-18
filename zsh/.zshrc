@@ -26,6 +26,13 @@ bindkey_emacs '^R' history-incremental-search-backward
 bindkey_emacs '^[[H' beginning-of-line
 bindkey_emacs '^[[F' end-of-line
 
+insert-newline() {
+  LBUFFER+=$'\n'
+}
+
+zle -N insert-newline
+bindkey_emacs '^N' insert-newline
+
 export EDITOR=nvim
 
 setopt HIST_IGNORE_ALL_DUPS
