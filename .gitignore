@@ -4,5 +4,13 @@ zsh/.zsh/completions/
 # Firefox local profile/runtime data
 firefox/.mozilla/firefox/
 
+# Local override files
+*.local.toml
+*.local.conf
+*.local.ini
+*.local.json
+*.local.yaml
+*.local.yml
+
 # Python bytecode caches
 __pycache__/
