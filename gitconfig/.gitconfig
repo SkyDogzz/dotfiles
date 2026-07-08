@@ -63,3 +63,5 @@
 	plus-emph-style = "bold #a6e3a1 #313244"
 	white-space-error-style = "#f38ba8"
 	zero-style = "#cdd6f4 #1e1e2e"
+[credential]
+	helper = cache

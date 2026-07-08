@@ -1,0 +1,39 @@
+@define-color mocha_base #1e1e2e;
+@define-color mocha_surface0 #313244;
+@define-color mocha_surface1 #45475a;
+@define-color mocha_surface2 #585b70;
+@define-color mocha_text #cdd6f4;
+@define-color mocha_subtext0 #a6adc8;
+@define-color mocha_mauve #cba6f7;
+@define-color mocha_sapphire #74c7ec;
+
+tecla-view {
+  background-color: alpha(@mocha_base, 0.88);
+  color: @mocha_text;
+}
+
+button.tecla-key {
+  background-color: alpha(@mocha_surface0, 0.88);
+  color: @mocha_text;
+  border-color: alpha(@mocha_surface2, 0.75);
+  box-shadow: none;
+}
+
+button.tecla-key:hover {
+  background-color: alpha(@mocha_surface1, 0.9);
+  border-color: alpha(@mocha_sapphire, 0.8);
+}
+
+button.tecla-key:active {
+  background-color: alpha(@mocha_surface2, 0.92);
+}
+
+button.tecla-key:selected {
+  background-color: alpha(@mocha_mauve, 0.92);
+  color: @mocha_base;
+  border-color: @mocha_mauve;
+}
+
+button.tecla-key:disabled {
+  color: @mocha_subtext0;
+}
