@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="${DOTFILES_ROOT:-$HOME/dotfiles}"
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="${DOTFILES_ROOT:-$(cd "$script_dir/.." && pwd)}"
 hypr_root="$repo_root/hypr/.config/hypr"
 
 ok_count=0
@@ -54,6 +55,48 @@ check_file_present() {
     note_ok "$label"
   else
     note_fail "$label missing"
+  fi
+}
+
+check_zsh_syntax() {
+  local file output
+
+  for file in "$repo_root/zsh/.zshenv" "$repo_root/zsh/.zshrc"; do
+    if output="$(zsh -n "$file" 2>&1)"; then
+      note_ok "${file#"$repo_root"/} syntax"
+    else
+      note_fail "${file#"$repo_root"/} syntax"
+      printf '%s\n' "$output" >&2
+    fi
+  done
+}
+
+check_git_config_origins() {
+  local output line_count
+
+  if ! output="$(git config --list --show-origin 2>&1)"; then
+    note_fail "git config origins unavailable"
+    printf '%s\n' "$output" >&2
+    return
+  fi
+
+  line_count="$(printf '%s\n' "$output" | sed '/^$/d' | wc -l | tr -d ' ')"
+  note_ok "git config origins (${line_count:-0} entries)"
+}
+
+check_hypr_config_errors() {
+  local output
+
+  if ! output="$(hyprctl configerrors 2>&1)"; then
+    note_warn "hyprctl configerrors unavailable without a running Hyprland session"
+    return
+  fi
+
+  if [[ -n "$(printf '%s\n' "$output" | sed '/^$/d')" ]]; then
+    note_fail "hyprctl configerrors reported issues"
+    printf '%s\n' "$output" >&2
+  else
+    note_ok "hyprctl configerrors"
   fi
 }
 
@@ -136,6 +179,11 @@ check_script_dir "$repo_root/scripts" "scripts"
 echo
 note_ok "scripts directory present: hypr/.config/hypr/scripts"
 check_script_dir "$hypr_root/scripts" "hypr/.config/hypr/scripts"
+
+echo
+check_zsh_syntax
+check_git_config_origins
+check_hypr_config_errors
 
 echo
 check_file_present "$hypr_root/hyprland.conf" "hypr/.config/hypr/hyprland.conf"
