@@ -32,6 +32,12 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `ai-models.md` — local AI model references
 - `projects/` — per-project overrides
 
+## Quick Start
+
+- `make bootstrap` — apply packages, regenerate completions, and run the main checks
+- `make check` — run the health checks and diagnostics
+- `make doctor` — run the repo-wide diagnostics directly
+
 ## Notes
 
 - All apps follow the `XDG` layout under their respective directory.
