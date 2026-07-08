@@ -40,6 +40,7 @@ setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt HIST_VERIFY
+setopt INTERACTIVE_COMMENTS
 setopt AUTO_CD
 setopt EXTENDED_GLOB
 setopt CORRECT
@@ -52,7 +53,7 @@ alias ls='ls --color=auto'
 alias ll='ls -alF --color=auto'
 alias grep='grep --color=auto'
 
-alias stow-all='~/dotfiles/scripts/stow-all'
+alias stow-all="$DOTFILES_ROOT/scripts/stow-all"
 
 # atuin shell history (ctrl-r only, not up-arrow)
 eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
@@ -101,7 +102,7 @@ eval "$(starship init zsh)"
 
 typeset -g STARSHIP_FULL_PROMPT="$PROMPT"
 typeset -g STARSHIP_FULL_RPROMPT="$RPROMPT"
-typeset -g STARSHIP_TRANSIENT_PROMPT='$(/usr/local/bin/starship module character)'
+typeset -g STARSHIP_TRANSIENT_PROMPT='$(starship module character)'
 typeset -g STARSHIP_TRANSIENT_RPROMPT=''
 typeset -g STARSHIP_TRANSIENT_ACTIVE=0
 
@@ -180,7 +181,7 @@ compinit
 # Pre-generated completions — regen with: gen-completions
 fpath+=~/.zsh/completions
 # opencode
-export PATH=/home/skydogzz/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME/bin:$PNPM_HOME:$PATH"

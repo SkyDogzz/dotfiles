@@ -2,7 +2,9 @@
 # Generate completion files for installed CLI tools
 # Saves to ~/.zsh/completions/ — loaded automatically by compinit via fpath
 
-dir="${ZSH_COMPLETIONS_DIR:-$HOME/dotfiles/zsh/.zsh/completions}"
+script_dir="${0:A:h}"
+repo_root="${DOTFILES_ROOT:-${script_dir:h}}"
+dir="${ZSH_COMPLETIONS_DIR:-$repo_root/zsh/.zsh/completions}"
 mkdir -p "$dir"
 
 # Format: "command args... <output_file>"
