@@ -56,19 +56,24 @@ alias stow-all='~/dotfiles/scripts/stow-all'
 
 # atuin shell history (ctrl-r only, not up-arrow)
 eval "$(atuin init zsh --disable-up-arrow)" 2>/dev/null
+# Keep cursor at end of line when recalling history with arrow keys.
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
 # Restore default up/down-arrow bindings in case old atuin bindings linger
-bindkey -M emacs '^[[A' history-beginning-search-backward
-bindkey -M emacs '^[OA' history-beginning-search-backward
-bindkey -M emacs '^[[B' history-beginning-search-forward
-bindkey -M emacs '^[OB' history-beginning-search-forward
-bindkey -M viins '^[[A' history-beginning-search-backward
-bindkey -M viins '^[OA' history-beginning-search-backward
-bindkey -M viins '^[[B' history-beginning-search-forward
-bindkey -M viins '^[OB' history-beginning-search-forward
-bindkey -M vicmd '^[[A' history-beginning-search-backward
-bindkey -M vicmd '^[OA' history-beginning-search-backward
-bindkey -M vicmd '^[[B' history-beginning-search-forward
-bindkey -M vicmd '^[OB' history-beginning-search-forward
+bindkey -M emacs '^[[A' history-beginning-search-backward-end
+bindkey -M emacs '^[OA' history-beginning-search-backward-end
+bindkey -M emacs '^[[B' history-beginning-search-forward-end
+bindkey -M emacs '^[OB' history-beginning-search-forward-end
+bindkey -M viins '^[[A' history-beginning-search-backward-end
+bindkey -M viins '^[OA' history-beginning-search-backward-end
+bindkey -M viins '^[[B' history-beginning-search-forward-end
+bindkey -M viins '^[OB' history-beginning-search-forward-end
+bindkey -M vicmd '^[[A' history-beginning-search-backward-end
+bindkey -M vicmd '^[OA' history-beginning-search-backward-end
+bindkey -M vicmd '^[[B' history-beginning-search-forward-end
+bindkey -M vicmd '^[OB' history-beginning-search-forward-end
 
 # fzf Catppuccin Mocha theme
 export FZF_DEFAULT_OPTS=" \
