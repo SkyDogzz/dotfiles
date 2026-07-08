@@ -30,6 +30,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `scripts/stowctl/` — C++ ncurses TUI for Stow package management
 - `.agents/` — opencode subagents
 - `ai-models.md` — local AI model references
+- `packages.md` — Arch Linux prerequisites for this repo
 - `projects/` — per-project overrides
 
 ## Quick Start
