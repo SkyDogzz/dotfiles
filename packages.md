@@ -77,3 +77,9 @@ sudo pacman -S --needed \
 ```
 
 `codex`, `opencode`, and `ollama` may come from other package sources depending on how you install them.
+
+On Debian, install the same Wayland clipboard provider with:
+
+```bash
+sudo apt install wl-clipboard
+```

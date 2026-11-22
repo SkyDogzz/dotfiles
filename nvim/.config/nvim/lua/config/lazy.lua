@@ -24,6 +24,10 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 
+if vim.env.SSH_TTY then
+  vim.g.clipboard = "osc52"
+end
+
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
