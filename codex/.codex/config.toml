@@ -1,6 +1,42 @@
-model = "gpt-5.4-mini"
-model_reasoning_effort = "medium"
-approvals_reviewer = "guardian_subagent"
+model = "gpt-6-luna"
+model_reasoning_effort = "low"
+
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+service_tier = "default"
+
+[projects."/home/skydogzz/minecraft-server"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/tstephan"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/odin"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/leetcode"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/JobOS"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/autark"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/tstephan/better_than_tim"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/better_than_tim"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/dopamine"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/learn_rust"]
+trust_level = "trusted"
+
+[projects."/home/skydogzz/libftasm"]
+trust_level = "trusted"
 
 [projects."/home/skydogzz/dotfiles"]
 trust_level = "trusted"
@@ -17,12 +53,16 @@ trust_level = "trusted"
 [projects."/home/skydogzz/42projects/ft_transcendence"]
 trust_level = "trusted"
 
+
 [tui]
-status_line = ["model-with-reasoning", "current-dir", "project-name", "git-branch", "pull-request-number", "branch-changes", "run-state", "permissions", "context-remaining", "five-hour-limit", "weekly-limit", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress"]
+theme = "catppuccin-mocha"
+status_line = ["model-with-reasoning", "current-dir", "context-remaining", "context-used", "five-hour-limit", "weekly-limit", "codex-version", "context-window-size", "used-tokens", "total-input-tokens", "total-output-tokens", "task-progress"]
 status_line_use_colors = true
+screen_reader_detection_done = true
+agents_overview_grouping = "project"
 
 [tui.model_availability_nux]
-"gpt-5.5" = 4
+"gpt-6.1-sol" = 4
 
 # OpenCode permission policy reference
 # Codex does not expose the same granular allow/deny permission table in this
