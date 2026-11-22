@@ -1,3 +1,35 @@
+local lsp_servers = {
+  "bashls",
+  "clangd",
+  "cssls",
+  "html",
+  "jsonls",
+  "lemminx",
+  "marksman",
+  "prismals",
+  "rust_analyzer",
+  "taplo",
+  "ts_ls",
+  "yamlls",
+}
+local formatters = {
+  "clang-format",
+  "prettier",
+  "shfmt",
+  "sqlfluff",
+  "taplo",
+}
+
+if vim.fn.executable("go") == 1 then
+  vim.list_extend(lsp_servers, { "gopls", "sqls" })
+  vim.list_extend(formatters, { "goimports" })
+end
+
+if vim.fn.executable("dotnet") == 1 then
+  vim.list_extend(lsp_servers, { "csharp_ls" })
+  vim.list_extend(formatters, { "csharpier" })
+end
+
 return {
   {
     "williamboman/mason.nvim",
@@ -9,23 +41,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = {
-        "bashls",
-        "csharp_ls",
-        "clangd",
-        "cssls",
-        "gopls",
-        "html",
-        "jsonls",
-        "lemminx",
-        "marksman",
-        "prismals",
-        "rust_analyzer",
-        "sqls",
-        "taplo",
-        "ts_ls",
-        "yamlls",
-      },
+      ensure_installed = lsp_servers,
       automatic_installation = true,
     },
   },
@@ -33,15 +49,7 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = {
-        "clang-format",
-        "csharpier",
-        "goimports",
-        "prettier",
-        "shfmt",
-        "sqlfluff",
-        "taplo",
-      },
+      ensure_installed = formatters,
     },
   },
   {
