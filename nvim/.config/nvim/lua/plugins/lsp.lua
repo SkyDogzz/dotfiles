@@ -14,6 +14,7 @@ local lsp_servers = {
 }
 local formatters = {
   "clang-format",
+  "asmfmt",
   "prettier",
   "shfmt",
   "sqlfluff",
@@ -93,8 +94,10 @@ return {
 
       vim.filetype.add({
         extension = {
+          asm = "asm",
           csproj = "xml",
           slnx = "xml",
+          s = "asm",
         },
       })
 
@@ -185,6 +188,8 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
+        asm = { "asmfmt" },
+        nasm = { "asmfmt" },
         c = { "clang-format" },
         cpp = { "clang-format" },
         cs = { "csharpier" },
