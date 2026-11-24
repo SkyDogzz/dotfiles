@@ -25,3 +25,4 @@ export PATH="$HOME/.local/bin:$CARGO_HOME/bin:$PNPM_HOME:$PATH"
 export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORM=wayland
 export SDL_VIDEODRIVER=wayland
+. "$HOME/.cargo/env"

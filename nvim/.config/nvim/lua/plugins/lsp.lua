@@ -1,4 +1,5 @@
 local lsp_servers = {
+  "asm_lsp",
   "bashls",
   "clangd",
   "cssls",
@@ -121,6 +122,9 @@ return {
         })
       end, { desc = "Format buffer", range = true })
 
+      vim.lsp.config.asm_lsp = {
+        capabilities = capabilities,
+      }
       vim.lsp.config.clangd = {
         capabilities = capabilities,
       }
@@ -166,6 +170,7 @@ return {
       vim.lsp.config.ts_ls = {
         capabilities = capabilities,
       }
+      vim.lsp.enable("asm_lsp")
       vim.lsp.enable("clangd")
       vim.lsp.enable("bashls")
       vim.lsp.enable("csharp_ls")
@@ -215,6 +220,16 @@ return {
         typescript = { "prettier" },
         typescriptreact = { "prettier" },
         yaml = { "prettier" },
+      },
+      formatters = {
+        nasfmt = {
+          command = "nasfmt",
+          args = {
+            "$FILENAME",
+            "$FILENAME",
+          },
+          stdin = false,
+        },
       },
       format_on_save = {
         timeout_ms = 500,
