@@ -49,7 +49,6 @@ Fedora = "󰣛"
 Alpine = ""
 Amazon = ""
 Android = ""
-AOSC = ""
 Arch = "󰣇"
 Artix = "󰣇"
 CentOS = ""
@@ -320,9 +319,6 @@ format = 'via [$symbol]($style)'
 [fennel]
 format = 'via [$symbol]($style)'
 
-[fortran]
-format = 'via [$symbol]($style)'
-
 [gleam]
 format = 'via [$symbol]($style)'
 
@@ -339,9 +335,6 @@ format = 'via [$symbol]($style)'
 format = 'via [$symbol]($style)'
 
 [lua]
-format = 'via [$symbol]($style)'
-
-[maven]
 format = 'via [$symbol]($style)'
 
 [meson]
@@ -364,9 +357,6 @@ format = 'via [$symbol]($style)'
 
 [perl]
 format = 'via [$symbol]($style)'
-
-[pixi]
-format = 'via [$symbol($environment )]($style)'
 
 [pulumi]
 format = 'via [$symbol$stack]($style)'
@@ -406,9 +396,6 @@ format = 'via [$symbol]($style)'
 
 [vlang]
 format = 'via [$symbol]($style)'
-
-[xmake]
-format = "via [$symbol]($style)"
 
 [zig]
 format = 'via [$symbol]($style)'
