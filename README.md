@@ -24,6 +24,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 - `scripts/check-ai-models.sh` — check local Ollama model availability
 - `scripts/ollama-tools` — local CLI tool loop for Ollama models
 - `scripts/update-system` — system upgrade helper for Arch
+- `scripts/configure-hotspot` — enable automatic reconnect for the iPhone hotspot
 - `scripts/stow-healthcheck` — dry-run Stow validation across packages
 - `scripts/check-symlinks` — verify symlinks point back to the repo
 - `scripts/dotfiles-doctor` — diagnostics for commands, symlinks, and Hyprland helpers
@@ -42,6 +43,7 @@ Minimal dotfiles for my Arch + Hyprland setup. Managed with [GNU Stow](https://w
 
 ## Notes
 
+- Run `./scripts/configure-hotspot` once to configure the saved NetworkManager profile `iPhone de Thomas (2)`. Pass a different connection name as the first argument if needed. If permission is denied, run it with `sudo`. NetworkManager stores these settings outside the Stow-managed dotfiles; run the helper again on a new machine after saving the hotspot connection.
 - All apps follow the `XDG` layout under their respective directory.
 - Some configs assume Wayland tools like `wl-clipboard`, `brightnessctl`, and `wpctl`.
 - Hyprland starts desktop helpers directly from its config.
