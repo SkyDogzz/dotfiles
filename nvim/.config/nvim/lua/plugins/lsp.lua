@@ -14,7 +14,6 @@ local lsp_servers = {
 }
 local formatters = {
   "clang-format",
-  "asmfmt",
   "prettier",
   "shfmt",
   "sqlfluff",
@@ -187,9 +186,16 @@ return {
   {
     "stevearc/conform.nvim",
     opts = {
+      formatters = {
+        nasfmt = {
+          command = "nasfmt",
+          args = { "$FILENAME", "$FILENAME" },
+          stdin = false,
+        },
+      },
       formatters_by_ft = {
-        asm = { "asmfmt" },
-        nasm = { "asmfmt" },
+        asm = { "nasfmt" },
+        nasm = { "nasfmt" },
         c = { "clang-format" },
         cpp = { "clang-format" },
         cs = { "csharpier" },
