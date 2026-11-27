@@ -115,28 +115,31 @@ check_script_dir() {
 }
 
 check_hypr_bind_targets() {
-  local hypr_conf="$hypr_root/hyprland.conf"
+  local hypr_conf="$hypr_root/hyprland.lua"
   local target line
   declare -A seen_targets=()
 
   if [[ ! -f "$hypr_conf" ]]; then
-    note_fail "hyprland config missing: hypr/.config/hypr/hyprland.conf"
+    note_fail "hyprland config missing: hypr/.config/hypr/hyprland.lua"
     return
   fi
 
   while IFS= read -r line; do
-    [[ "$line" == *"$repo_root/"* ]] || continue
-    [[ "$line" =~ $repo_root/([^[:space:],]+) ]] || continue
-    target="${BASH_REMATCH[0]}"
-    [[ -n "${seen_targets[$target]:-}" ]] && continue
-    seen_targets["$target"]=1
-    if [[ ! -e "$target" ]]; then
-      note_fail "hypr bind target missing: ${target#"$repo_root"/}"
-    elif [[ ! -x "$target" ]]; then
-      note_fail "hypr bind target not executable: ${target#"$repo_root"/}"
-    else
-      note_ok "hypr bind target ${target#"$repo_root"/}"
-    fi
+    [[ "$line" == *"$repo_root/hypr/.config/hypr/scripts/"* ]] || continue
+    while [[ "$line" =~ $repo_root/hypr/\.config/hypr/scripts/([[:alnum:]_.-]+) ]]; do
+      target="$repo_root/hypr/.config/hypr/scripts/${BASH_REMATCH[1]}"
+      [[ -n "${seen_targets[$target]:-}" ]] || {
+        seen_targets["$target"]=1
+        if [[ ! -e "$target" ]]; then
+          note_fail "hypr bind target missing: ${target#"$repo_root"/}"
+        elif [[ ! -x "$target" ]]; then
+          note_fail "hypr bind target not executable: ${target#"$repo_root"/}"
+        else
+          note_ok "hypr bind target ${target#"$repo_root"/}"
+        fi
+      }
+      line="${line#*"${BASH_REMATCH[0]}"}"
+    done
   done < "$hypr_conf"
 }
 
@@ -186,7 +189,7 @@ check_git_config_origins
 check_hypr_config_errors
 
 echo
-check_file_present "$hypr_root/hyprland.conf" "hypr/.config/hypr/hyprland.conf"
+check_file_present "$hypr_root/hyprland.lua" "hypr/.config/hypr/hyprland.lua"
 check_hypr_bind_targets
 
 echo

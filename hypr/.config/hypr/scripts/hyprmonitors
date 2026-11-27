@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cfg="$HOME/.config/hypr/hyprmonitors.conf"
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/hypr"
 hyprpaper_cfg="$cache_dir/hyprpaper.conf"
 default_hyprpaper_cfg="$HOME/.config/hypr/hyprpaper.conf"
-
-# Apply monitor settings before hyprpaper creates its layer surfaces.
-if [[ -f "$cfg" ]]; then
-  while IFS= read -r line; do
-    [[ "$line" =~ ^[[:space:]]*# ]] && continue
-    [[ -z "${line// /}" ]] && continue
-    hyprctl keyword "$line"
-  done < "$cfg"
-fi
 
 # Wait for Hyprland to expose at least one monitor.
 for _ in {1..20}; do
@@ -33,14 +23,6 @@ if ! pgrep -x hyprpaper >/dev/null 2>&1; then
   disown
 fi
 
-# Extract monitor names already handled in the config
-configured=()
-while IFS= read -r line; do
-  if [[ "$line" =~ ^[[:space:]]*monitor[[:space:]]*=[[:space:]]*([^,]+) ]]; then
-    configured+=("${BASH_REMATCH[1]}")
-  fi
-done < "$cfg"
-
 # Get the current wallpaper path
 wallpaper_path=""
 for f in "$hyprpaper_cfg" "$default_hyprpaper_cfg"; do
@@ -49,16 +31,9 @@ for f in "$hyprpaper_cfg" "$default_hyprpaper_cfg"; do
   [[ -n "$wallpaper_path" ]] && break
 done
 
-# Configure monitors not covered by the static config.
+# Configure monitors other than the static eDP-2 rule in hyprland.lua.
 while IFS= read -r name; do
-  already=false
-  for c in "${configured[@]}"; do
-    if [[ "$name" == "$c" ]]; then
-      already=true
-      break
-    fi
-  done
-  if ! $already; then
+  if [[ "$name" != "eDP-2" ]]; then
     hyprctl keyword monitor "$name,preferred,auto,1"
   fi
 done < <(hyprctl monitors -j | jq -r '.[].name')
